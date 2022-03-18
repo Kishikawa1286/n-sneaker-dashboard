@@ -25,3 +25,10 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_N_SNEAKER_DEVELOPMENT }}'
           projectId: n-sneaker-development
+
+      - run: flutter build web
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_N_SNEAKER_PRODUCTION }}'
+          projectId: n-sneaker-production
