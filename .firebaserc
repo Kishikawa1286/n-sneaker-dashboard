@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "n-sneaker-production",
+    "default": "n-sneaker-development",
     "production": "n-sneaker-production"
   },
   "targets": {}
