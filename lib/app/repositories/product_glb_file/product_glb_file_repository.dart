@@ -3,24 +3,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../interfaces/firebase/cloud_firestore/cloud_firestore_interface.dart';
 import '../../interfaces/firebase/cloud_firestore/cloud_firestore_paths.dart';
-import '../../interfaces/firebase/cloud_functions/cloud_functions_interface.dart';
 import 'product_glb_file.dart';
 
 final productGlbFileRepositoryProvider = Provider<ProductGlbFileRepository>(
-  (ref) => ProductGlbFileRepository(
-    ref.read(cloudFirestoreInterfaceProvider),
-    ref.read(cloudFunctionsInterfaceProvider),
-  ),
+  (ref) => ProductGlbFileRepository(ref.read(cloudFirestoreInterfaceProvider)),
 );
 
 class ProductGlbFileRepository {
-  const ProductGlbFileRepository(
-    this._cloudFirestoreInterface,
-    this._cloudFunctionsInterface,
-  );
+  const ProductGlbFileRepository(this._cloudFirestoreInterface);
 
   final CloudFirestoreInterface _cloudFirestoreInterface;
-  final CloudFunctionsInterface _cloudFunctionsInterface;
 
   Future<ProductGlbFileModel> _convertDocumentSnapshotToProductGlbFileModel(
     DocumentSnapshot<Map<String, dynamic>> doc,

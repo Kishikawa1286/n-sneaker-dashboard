@@ -11,7 +11,7 @@ final accountServiceProvider = Provider<AccountService>(
 
 class AccountService {
   AccountService(this._accountRepository) {
-    _authStateController.add(AuthState.notChecked);
+    _authStateController.add(AuthState.signOut);
   }
 
   final AccountRepository _accountRepository;
@@ -45,4 +45,4 @@ class AccountService {
   }
 }
 
-enum AuthState { notChecked, signIn, signOut }
+enum AuthState { signIn, signOut }

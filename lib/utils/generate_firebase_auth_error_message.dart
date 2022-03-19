@@ -3,22 +3,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 String generateFirebaseAuthErrorMessage(FirebaseAuthException e) {
   switch (e.code) {
     case 'invalid-email':
-      return '無効なメールアドレスです。';
+      return 'email address is invalid.';
     case 'wrong-password':
-      return 'パスワードが違います。';
+      return 'password is wrong.';
     case 'user-disabled':
-      return 'アカウントが無効化されています。';
+      return 'account is disabled by admin.';
     case 'user-not-found':
-      return 'アカウントが存在しません。';
+      return 'account does not found.';
     case 'operation-not-allowed':
-      return '権限がありません。';
+      return 'you do not have enough permission.';
     case 'too-many-requests':
-      return 'リクエスト数の上限に達しました。時間をおいて再度お試しください。';
+      return 'too many requests. try later.';
     case 'email-already-exists':
-      return 'そのメールアドレスはすでに登録されています。';
+      return 'the email address already exists.';
     case 'email-already-in-use':
-      return 'そのメールアドレスはすでに登録されています。';
+      return 'the email address is already used.';
     default:
-      return 'メールアドレス・パスワードを確認してください。';
+      return 'configure email and password.';
   }
 }

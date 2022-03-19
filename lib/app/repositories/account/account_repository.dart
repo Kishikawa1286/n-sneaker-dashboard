@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../interfaces/firebase/cloud_firestore/cloud_firestore_interface.dart';
-import '../../interfaces/firebase/cloud_firestore/cloud_firestore_paths.dart';
 import '../../interfaces/firebase/cloud_functions/cloud_functions_interface.dart';
 import '../../interfaces/firebase/firebase_auth/firebase_auth_interface.dart';
 import 'account_model.dart';
@@ -10,7 +8,6 @@ import 'account_model.dart';
 final accountRepositoryProvider = Provider<AccountRepository>(
   (ref) => AccountRepository(
     ref.read(firebaseAuthInterfaceProvider),
-    ref.read(cloudFirestoreInterfaceProvider),
     ref.read(cloudFunctionsInterfaceProvider),
   ),
 );
@@ -18,12 +15,10 @@ final accountRepositoryProvider = Provider<AccountRepository>(
 class AccountRepository {
   const AccountRepository(
     this._firebaseAuthInterface,
-    this._cloudFirestoreInterface,
     this._cloudFunctionsInterface,
   );
 
   final FirebaseAuthInterface _firebaseAuthInterface;
-  final CloudFirestoreInterface _cloudFirestoreInterface;
   final CloudFunctionsInterface _cloudFunctionsInterface;
 
   User? getCurrentUser() => _firebaseAuthInterface.getCurrentUser();
@@ -46,19 +41,22 @@ class AccountRepository {
       if (userId == null) {
         throw Exception('uid is null. something went wrong.');
       }
-      final documentSnapshot =
-          await _cloudFirestoreInterface.fetchDocumentSnapshot(
-        documentPath: accountDocumentPath(userId),
-      );
-      return AccountModel.fromDocumentSnapshot(documentSnapshot);
+      final isAdmin = await _checkAdminAccount();
+      if (!isAdmin) {
+        throw Exception('account is not admin.');
+      }
+      return AccountModel(id: userId);
     } on Exception catch (e) {
       print(e);
       rethrow;
     }
   }
 
-  Future<void> sendPasswordResetEmail({required String email}) =>
-      _firebaseAuthInterface.sendPasswordResetEmail(email: email);
+  Future<bool> _checkAdminAccount() async {
+    final result = await _cloudFunctionsInterface.checkAdminAccount();
+    final isAdmin = result.data as bool;
+    return isAdmin;
+  }
 
   Future<void> signOut() => _firebaseAuthInterface.signOut();
 }

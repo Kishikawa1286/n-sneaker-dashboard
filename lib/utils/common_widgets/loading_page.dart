@@ -5,19 +5,7 @@ class LoadingPage extends StatelessWidget {
   const LoadingPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: SizedBox(
-            width: 80,
-            height: 80,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: const Image(
-                image: AssetImage('assets/icon.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
+  Widget build(BuildContext context) => const Scaffold(
+        body: Center(child: Text('Loading...')),
       );
 }

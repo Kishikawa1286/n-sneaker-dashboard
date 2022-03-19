@@ -6,22 +6,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../utils/generate_firebase_auth_error_message.dart';
 import '../../../utils/view_model_change_notifier.dart';
-import '../../repositories/account/account_repository.dart';
 import '../../services/account/account_service.dart';
 
 final signInPageViewModelProvider =
     ChangeNotifierProvider.autoDispose<SignInPageViewModel>(
   (ref) => SignInPageViewModel(
     ref.read(accountServiceProvider),
-    ref.read(accountRepositoryProvider),
   ),
 );
 
 class SignInPageViewModel extends ViewModelChangeNotifier {
-  SignInPageViewModel(this._accountService, this._accountRepository);
+  SignInPageViewModel(this._accountService);
 
   final AccountService _accountService;
-  final AccountRepository _accountRepository;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -45,19 +42,6 @@ class SignInPageViewModel extends ViewModelChangeNotifier {
       await _accountService.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      _errorMessage = generateFirebaseAuthErrorMessage(e);
-      notifyListeners();
-    } on Exception catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> sendPasswordResetEmail() async {
-    try {
-      await _accountRepository.sendPasswordResetEmail(
-        email: _emailController.text,
       );
     } on FirebaseAuthException catch (e) {
       _errorMessage = generateFirebaseAuthErrorMessage(e);

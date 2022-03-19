@@ -15,26 +15,26 @@ class SignInPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(signInPageViewModelProvider);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: FocusScope.of(context).unfocus,
-          child: Center(
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: FocusScope.of(context).unfocus,
+        child: Center(
+          child: Container(
+            height: 290,
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Card(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
-                    const SignInPageHeading(text: 'ログイン'),
+                    const SignInPageHeading(text: 'Sign in (admin only)'),
                     SignInPageTextFormField(
-                      hintText: 'メールアドレス',
+                      hintText: 'email',
                       controller: viewModel.emailController,
                       keyboardType: TextInputType.emailAddress,
                     ),
                     SignInPageTextFormField(
-                      hintText: 'パスワード',
+                      hintText: 'password',
                       controller: viewModel.passwordController,
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
@@ -47,7 +47,7 @@ class SignInPage extends HookConsumerWidget {
                       ),
                       child: SocialLoginButton(
                         height: 50,
-                        text: 'ログイン',
+                        text: 'sign in',
                         borderRadius: 10,
                         backgroundColor: CommonStyle.black,
                         buttonType: SocialLoginButtonType.generalLogin,

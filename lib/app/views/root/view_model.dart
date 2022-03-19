@@ -12,5 +12,13 @@ class RootViewModel extends ViewModelChangeNotifier {
 
   final AccountService _accountService;
 
+  int _selectedIndex = 0;
+
   Stream<AuthState?> get authStateStream => _accountService.authStateStream;
+  int get selectedIndex => _selectedIndex;
+
+  void select(int index) {
+    _selectedIndex = index;
+    notifyListeners();
+  }
 }

@@ -1,75 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+  <head>
+    <!--
+      If you are serving your web app in a path other than the root, change the
+      href value below to reflect the base path you are serving from.
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+      The path provided below has to start and end with a slash "/" in order for
+      it to work correctly.
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+      For more details:
+      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
+      This is a placeholder for base href that will be replaced by the value of
+      the `--base-href` argument provided to `flutter build`.
+    -->
+    <base href="$FLUTTER_BASE_HREF">
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A new Flutter project.">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="n_sneaker_dashboard">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="n_sneaker_dashboard">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>n_sneaker_dashboard</title>
-  <link rel="manifest" href="manifest.json">
-</head>
+    <title>n_sneaker_dashboard</title>
+    <link rel="manifest" href="manifest.json">
+  </head>
 
-<body>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="main.dart.js" type="application/javascript"></script>
-  <!-- 
-    https://firebase.flutter.dev/docs/manual-installation/web/
-    https://stackoverflow.com/questions/65647090/access-dart-define-environment-variables-inside-index-html
-   -->
-   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.9/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.9/firebase-analytics.js";
-
-    document.addEventListener("dart_loaded", function () {
-      const flavor = window.FLAVOR;
-      if (flavor === 'prod') {
-        const firebaseConfig = {
-          apiKey: "AIzaSyAB4Is_RRyO0YsxLpoLwa3dNZ45kbkhx0g",
-          authDomain: "n-sneaker-production.firebaseapp.com",
-          projectId: "n-sneaker-production",
-          storageBucket: "n-sneaker-production.appspot.com",
-          messagingSenderId: "96386266943",
-          appId: "1:96386266943:web:6bb8051017997319afc58a",
-          measurementId: "G-W187X9L3X8"
-        };
-        initializeApp(firebaseConfig);
-      } else {
-        const firebaseConfig = {
-          apiKey: "AIzaSyC6Bydu9OtRu93EB7izNWr9gFixVpJM6sc",
-          authDomain: "n-sneaker-development.firebaseapp.com",
-          projectId: "n-sneaker-development",
-          storageBucket: "n-sneaker-development.appspot.com",
-          messagingSenderId: "193204818605",
-          appId: "1:193204818605:web:75e857b289a395086aac24",
-          measurementId: "G-4LY6MKL64N"
-        };
-        initializeApp(firebaseConfig);
-      }
-    });
-  </script>
-</body>
+  <body>
+    <script src="main.dart.js" type="application/javascript"></script>
+  </body>
 </html>
