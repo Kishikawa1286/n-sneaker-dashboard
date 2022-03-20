@@ -4,11 +4,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../utils/common_widgets/loading_page.dart';
 import '../../services/account/account_service.dart';
+import '../product_list_page/product_list_page.dart';
 import '../sign_in_page/sign_in_page.dart';
 import 'components/drawer_list_tile.dart';
 import 'view_model.dart';
 
-const _titles = ['add product', 'add glb file'];
+const _titles = ['product'];
 
 class Root extends HookConsumerWidget {
   const Root();
@@ -44,8 +45,9 @@ class Root extends HookConsumerWidget {
           body: Builder(
             builder: (context) {
               final selectedIndex = viewModel.selectedIndex;
-              if (selectedIndex == 0) {}
-              if (selectedIndex == 1) {}
+              if (selectedIndex == 0) {
+                return const ProductListPage();
+              }
               return const LoadingPage();
             },
           ),
