@@ -22,9 +22,18 @@ class Root extends HookConsumerWidget {
       builder: (context, snapshot) {
         final authState = snapshot.data;
         if (authState == null || authState == AuthState.signOut) {
-          return const SignInPage();
+          // return const SignInPage();
+          return const ProductListPage();
         }
         return Scaffold(
+          key: viewModel.scaffoldKey,
+          appBar: AppBar(
+            title: Text(_titles[viewModel.selectedIndex]),
+            leading: IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: viewModel.scaffoldKey.currentState?.openDrawer,
+            ),
+          ),
           drawer: Drawer(
             child: ListView(
               children: _titles

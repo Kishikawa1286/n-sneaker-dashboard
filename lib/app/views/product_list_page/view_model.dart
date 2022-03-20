@@ -25,6 +25,11 @@ class ProductListPageViewModel extends ViewModelChangeNotifier {
 
   PagingController<int, ProductModel> get pagingController => _pagingController;
 
+  void refresh() {
+    _pagingController.refresh();
+    notifyListeners();
+  }
+
   Future<void> _fetchProducts(int pageKey) async {
     try {
       final startAfter = pagingController.itemList?.last;
