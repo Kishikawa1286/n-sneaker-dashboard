@@ -22,8 +22,7 @@ class Root extends HookConsumerWidget {
       builder: (context, snapshot) {
         final authState = snapshot.data;
         if (authState == null || authState == AuthState.signOut) {
-          // return const SignInPage();
-          return const ProductListPage();
+          return const SignInPage();
         }
         return Scaffold(
           key: viewModel.scaffoldKey,

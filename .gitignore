@@ -1,4 +1,5 @@
 .firebase/
+.fvm/flutter_sdk
 
 # Miscellaneous
 *.class

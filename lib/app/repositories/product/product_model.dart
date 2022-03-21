@@ -24,10 +24,10 @@ class ProductModel {
     required this.numberOfGlbFiles,
     required this.createdAt,
     required this.lastEditedAt,
-    this.description,
-    this.collectionProductStatement,
-    this.arStatement,
-    this.otherStatement,
+    required this.description,
+    required this.collectionProductStatement,
+    required this.arStatement,
+    required this.otherStatement,
     this.documentSnapshot,
   });
 
@@ -45,13 +45,13 @@ class ProductModel {
       series: data['series'] as String,
       tags:
           List<String>.from(data['tags'] as List<dynamic>? ?? const <String>[]),
-      description: data['description'] as String?,
+      description: data['description'] as String,
       collectionProductStatement:
-          data['collection_product_statement'] as String?,
-      arStatement: data['ar_statement'] as String?,
-      otherStatement: data['other_statement'] as String?,
+          data['collection_product_statement'] as String,
+      arStatement: data['ar_statement'] as String,
+      otherStatement: data['other_statement'] as String,
       titleJp: data['title_jp'] as String,
-      vendorJp: data['verndor_jp'] as String,
+      vendorJp: data['vendor_jp'] as String,
       seriesJp: data['series_jp'] as String,
       tagsJp: List<String>.from(data['tags_jp'] as List<dynamic>),
       descriptionJp: data['description_jp'] as String,
@@ -81,10 +81,10 @@ class ProductModel {
   final String series;
   // product data en
   final List<String> tags;
-  final String? description;
-  final String? collectionProductStatement;
-  final String? arStatement;
-  final String? otherStatement;
+  final String description;
+  final String collectionProductStatement;
+  final String arStatement;
+  final String otherStatement;
   // product data jp
   final String titleJp;
   final String vendorJp;
@@ -108,4 +108,33 @@ class ProductModel {
   final Timestamp lastEditedAt;
 
   final DocumentSnapshot? documentSnapshot;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'id': id,
+        'title': title,
+        'vendor': vendor,
+        'series': series,
+        'tags': tags,
+        'description': description,
+        'collection_product_statement': collectionProductStatement,
+        'ar_statement': arStatement,
+        'other_statement': otherStatement,
+        'title_jp': titleJp,
+        'vendor_jp': vendorJp,
+        'series_jp': seriesJp,
+        'tags_jp': tagsJp,
+        'description_jp': descriptionJp,
+        'collection_product_statement_jp': collectionProductStatementJp,
+        'ar_statement_jp': arStatementJp,
+        'other_statement_jp': otherStatementJp,
+        'images': imageUrls,
+        'tile_images': tileImageUrls,
+        'transparent_background_images': transparentBackgroundImageUrls,
+        'price_jpy': priceJpy,
+        'number_of_favorite': numberOfFavorite,
+        'number_of_holders': numberOfHolders,
+        'number_of_glb_files': numberOfGlbFiles,
+        'created_at': createdAt,
+        'last_edited_at': lastEditedAt,
+      };
 }

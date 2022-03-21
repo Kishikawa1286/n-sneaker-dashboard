@@ -7,7 +7,7 @@ class ProductEditPageTextFormField extends StatelessWidget {
     required this.controller,
     this.onChanged,
     this.hintText,
-    this.multiline = false,
+    this.keyboardType = TextInputType.text,
     this.obscureText = false,
   });
 
@@ -17,8 +17,8 @@ class ProductEditPageTextFormField extends StatelessWidget {
       EdgeInsets.symmetric(horizontal: 10, vertical: 5);
 
   final TextEditingController controller;
+  final TextInputType keyboardType;
   final String? hintText;
-  final bool multiline;
   final void Function(String value)? onChanged;
   final bool obscureText;
 
@@ -56,8 +56,7 @@ class ProductEditPageTextFormField extends StatelessWidget {
                 ),
                 contentPadding: _formFieldContentPadding,
               ),
-              keyboardType:
-                  multiline ? TextInputType.multiline : TextInputType.text,
+              keyboardType: keyboardType,
               onChanged: onChanged,
               obscureText: obscureText,
               maxLines: null,
