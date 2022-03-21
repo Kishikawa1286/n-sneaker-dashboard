@@ -10,9 +10,7 @@ class SignInPageHeading extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 15),
         decoration: const BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              width: 2,
-            ),
+            bottom: BorderSide(width: 2),
           ),
         ),
         alignment: Alignment.bottomLeft,

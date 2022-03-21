@@ -5,7 +5,7 @@ String randomString([int length = 16]) {
       '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz';
   final random = Random.secure();
   final randomStr =
-      List.generate(length - 1, (_) => charset[random.nextInt(charset.length)])
+      List.generate(length, (_) => charset[random.nextInt(charset.length)])
           .join();
-  return '0$randomStr';
+  return randomStr;
 }

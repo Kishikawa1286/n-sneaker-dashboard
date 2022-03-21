@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'components/image_picker.dart';
+import '../../../utils/common_widgets/edit_page_image_picker.dart';
+import '../../../utils/common_widgets/edit_page_text_form_field.dart';
 import 'components/multiple_images_picker.dart';
-import 'components/text_form_field.dart';
 import 'view_model.dart';
 
 void pushProductEditPage(BuildContext context, {required String productId}) =>
@@ -35,71 +35,71 @@ class ProductEditPage extends HookConsumerWidget {
             ),
             child: Column(
               children: [
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.titleController,
                   hintText: 'title',
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.vendorController,
                   hintText: 'vendor',
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.seriesController,
                   hintText: 'series',
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.descriptionController,
                   hintText: 'description',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.collectionProductStatementController,
                   hintText: 'collectionProductStatement',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.arStatementController,
                   hintText: 'arStatement',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.otherStatementController,
                   hintText: 'otherStatement',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.titleJpController,
                   hintText: 'titleJp',
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.vendorJpController,
                   hintText: 'vendorJp',
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.seriesJpController,
                   hintText: 'seriesJp',
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.descriptionJpController,
                   hintText: 'descriptionJp',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.collectionProductStatementJpController,
                   hintText: 'collectionProductStatementJp',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.arStatementJpController,
                   hintText: 'arStatementJp',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.otherStatementJpController,
                   hintText: 'otherStatementJp',
                   keyboardType: TextInputType.multiline,
                 ),
-                ProductEditPageTextFormField(
+                EditPageTextFormField(
                   controller: viewModel.priceJpyController,
                   hintText: 'priceJpy',
                   keyboardType: TextInputType.number,
@@ -117,7 +117,7 @@ class ProductEditPage extends HookConsumerWidget {
                   padding: EdgeInsets.symmetric(vertical: 25),
                   child: Text('Market List Page Image'),
                 ),
-                ProductEditPageImagePicker(
+                EditPageImagePicker(
                   image: viewModel.marketTileImage,
                   onTap: viewModel.setMarketTileImage,
                 ),
@@ -125,7 +125,7 @@ class ProductEditPage extends HookConsumerWidget {
                   padding: EdgeInsets.symmetric(vertical: 25),
                   child: Text('Collection Page Image'),
                 ),
-                ProductEditPageImagePicker(
+                EditPageImagePicker(
                   image: viewModel.transparentBackgroundImage,
                   onTap: viewModel.setTransparentBackgroundImage,
                 ),

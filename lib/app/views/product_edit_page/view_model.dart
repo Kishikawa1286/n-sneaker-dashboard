@@ -72,6 +72,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   ImageProvider? get marketTileImage => _marketTileImage;
   ImageProvider? get transparentBackgroundImage => _transparentBackgroundImage;
 
+  bool _uploading = false;
+
   Future<void> _init() async {
     if (_productId.isEmpty) {
       return;
@@ -135,12 +137,16 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   }
 
   Future<void> submit() async {
+    if (_uploading) {
+      return;
+    }
+    final tile = _marketTileImage;
+    final transparentBg = _transparentBackgroundImage;
+    if (_marketImages.isEmpty || tile == null || transparentBg == null) {
+      return;
+    }
+    _uploading = true;
     try {
-      final tile = _marketTileImage;
-      final transparentBg = _transparentBackgroundImage;
-      if (_marketImages.isEmpty || tile == null || transparentBg == null) {
-        return;
-      }
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
           title: _titleController.text,
@@ -196,5 +202,6 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     } on Exception catch (e) {
       print(e);
     }
+    _uploading = false;
   }
 }

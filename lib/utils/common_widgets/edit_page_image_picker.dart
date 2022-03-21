@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/common_style.dart';
+import '../common_style.dart';
 
-class ProductEditPageImagePicker extends StatelessWidget {
-  const ProductEditPageImagePicker({required this.image, required this.onTap});
+class EditPageImagePicker extends StatelessWidget {
+  const EditPageImagePicker({required this.image, required this.onTap});
 
   final ImageProvider? image;
   final void Function() onTap;

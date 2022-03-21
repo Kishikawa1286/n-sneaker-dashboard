@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/common_style.dart';
+import '../common_style.dart';
 
-class ProductEditPageTextFormField extends StatelessWidget {
-  const ProductEditPageTextFormField({
+class EditPageTextFormField extends StatelessWidget {
+  const EditPageTextFormField({
     required this.controller,
     this.onChanged,
     this.hintText,

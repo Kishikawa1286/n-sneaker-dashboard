@@ -18,7 +18,7 @@ class ProductGlbFileModel {
     required this.productTitleJp,
     required this.productVendorJp,
     required this.productSeriesJp,
-    required this.produxtTagsJp,
+    required this.productTagsJp,
     this.documentSnapshot,
   });
 
@@ -48,7 +48,7 @@ class ProductGlbFileModel {
       productTitleJp: data['product_title_jp'] as String,
       productVendorJp: data['product_vendor_jp'] as String,
       productSeriesJp: data['product_series_jp'] as String,
-      produxtTagsJp:
+      productTagsJp:
           List<String>.from(data['product_tags_jp'] as List<dynamic>),
       documentSnapshot: snapshot,
     );
@@ -79,7 +79,25 @@ class ProductGlbFileModel {
   final String productTitleJp;
   final String productVendorJp;
   final String productSeriesJp;
-  final List<String> produxtTagsJp;
+  final List<String> productTagsJp;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'id': id,
+        'title': title,
+        'title_jp': titleJp,
+        'images': imageUrls,
+        'created_at': createdAt,
+        'last_edited_at': lastEditedAt,
+        'product_id': productId,
+        'product_title': productTitle,
+        'product_vendor': productVendor,
+        'product_series': productSeries,
+        'product_tags': productTags,
+        'product_title_jp': productTitleJp,
+        'product_vendor_jp': productVendorJp,
+        'product_series_jp': productSeriesJp,
+        'product_tags_jp': productTagsJp,
+      };
 
   final DocumentSnapshot? documentSnapshot;
 }

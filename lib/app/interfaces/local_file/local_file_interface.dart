@@ -7,9 +7,8 @@ final localFileInterfaceProvider =
 class LocalFileInterface {
   const LocalFileInterface();
 
-  Future<FilePickerResult?> pickGlbFiles() async {
+  Future<FilePickerResult?> pickGlbFile() async {
     final result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
       type: FileType.custom,
       allowedExtensions: ['glb'],
     );

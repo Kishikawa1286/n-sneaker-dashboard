@@ -25,4 +25,9 @@ class FirebaseStorageInterface {
     final downloadUrl = await task.ref.getDownloadURL();
     return downloadUrl;
   }
+
+  Future<void> deleteFile({required String path}) async {
+    final ref = _storage.ref(path);
+    await ref.delete();
+  }
 }

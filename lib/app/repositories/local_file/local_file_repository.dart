@@ -15,13 +15,12 @@ class LocalFileRepository {
 
   final LocalFileInterface _localFileInterface;
 
-  Future<List<PlatformFile>> pickGlbFiles() async {
-    final result = await _localFileInterface.pickGlbFiles();
+  Future<PlatformFile?> pickGlbFile() async {
+    final result = await _localFileInterface.pickGlbFile();
     if (result == null) {
-      return [];
+      return null;
     }
-    final files = result.files;
-    return files;
+    return result.files.single;
   }
 
   Future<MemoryImage?> pickImageFile() async {
