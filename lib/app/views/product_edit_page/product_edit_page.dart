@@ -129,6 +129,15 @@ class ProductEditPage extends HookConsumerWidget {
                   image: viewModel.transparentBackgroundImage,
                   onTap: viewModel.setTransparentBackgroundImage,
                 ),
+                CheckboxListTile(
+                  value: viewModel.visible,
+                  title: const Text(
+                    'visible',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: viewModel.setVisibility,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: ElevatedButton(

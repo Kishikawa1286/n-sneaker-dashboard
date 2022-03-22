@@ -109,6 +109,7 @@ class ProductRepository {
   }
 
   Future<void> addProduct({
+    required bool visible,
     required String title,
     required String vendor,
     required String series,
@@ -136,6 +137,7 @@ class ProductRepository {
     );
     try {
       await updateProduct(
+        visible: visible,
         id: documentRef.id,
         title: title,
         vendor: vendor,
@@ -165,6 +167,7 @@ class ProductRepository {
   }
 
   Future<void> updateProduct({
+    required bool visible,
     required String id,
     required String title,
     required String vendor,
@@ -210,6 +213,7 @@ class ProductRepository {
       throw Exception('failed to upload images.');
     }
     final product = ProductModel(
+      visible: visible,
       id: id,
       title: title,
       vendor: vendor,
