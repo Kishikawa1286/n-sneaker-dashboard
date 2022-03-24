@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
   const ProductModel({
-    required this.visible,
+    required this.visibleInMarket,
     required this.id,
     required this.title,
     required this.vendor,
@@ -40,7 +40,7 @@ class ProductModel {
       throw Exception('DocumentSnapshot has no data.');
     }
     return ProductModel(
-      visible: data['visible'] as bool,
+      visibleInMarket: data['vivsible_in_market'] as bool,
       id: data['id'] as String,
       title: data['title'] as String,
       vendor: data['vendor'] as String,
@@ -76,7 +76,7 @@ class ProductModel {
     );
   }
 
-  final bool visible;
+  final bool visibleInMarket;
   final String id;
   // product data
   final String title;
@@ -113,7 +113,7 @@ class ProductModel {
   final DocumentSnapshot? documentSnapshot;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
-        'visible': visible,
+        'vivsible_in_market': visibleInMarket,
         'id': id,
         'title': title,
         'vendor': vendor,

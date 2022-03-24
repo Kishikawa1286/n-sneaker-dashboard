@@ -67,12 +67,12 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   List<ImageProvider> _marketImages = [];
   ImageProvider? _marketTileImage;
   ImageProvider? _transparentBackgroundImage;
-  bool _visible = false;
+  bool _visibleInMarket = false;
 
   List<ImageProvider> get marketImages => _marketImages;
   ImageProvider? get marketTileImage => _marketTileImage;
   ImageProvider? get transparentBackgroundImage => _transparentBackgroundImage;
-  bool get visible => _visible;
+  bool get visibleInMarket => _visibleInMarket;
 
   bool _uploading = false;
 
@@ -107,8 +107,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   }
 
   // ignore: avoid_positional_boolean_parameters
-  void setVisibility(bool? value) {
-    _visible = value ?? false;
+  void setVisibleInMarket(bool? value) {
+    _visibleInMarket = value ?? false;
     notifyListeners();
   }
 
@@ -157,7 +157,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     try {
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
-          visible: _visible,
+          visibleInMarket: _visibleInMarket,
           title: _titleController.text,
           vendor: _vendorController.text,
           series: _seriesController.text,
@@ -183,7 +183,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
         );
       } else {
         await _productRepository.updateProduct(
-          visible: _visible,
+          visibleInMarket: _visibleInMarket,
           id: _productId,
           title: _titleController.text,
           vendor: _vendorController.text,

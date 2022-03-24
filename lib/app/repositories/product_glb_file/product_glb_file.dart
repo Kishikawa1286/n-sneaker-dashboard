@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductGlbFileModel {
   const ProductGlbFileModel({
+    required this.availableForAr,
+    required this.availableForViewer,
     required this.id,
     required this.filePath,
     required this.fileExists,
@@ -32,6 +34,8 @@ class ProductGlbFileModel {
       throw Exception('DocumentSnapshot has no data.');
     }
     return ProductGlbFileModel(
+      availableForViewer: data['available_for_viewer'] as bool,
+      availableForAr: data['available_for_ar'] as bool,
       id: data['id'] as String,
       filePath: filePath,
       fileExists: fileExists,
@@ -53,6 +57,9 @@ class ProductGlbFileModel {
       documentSnapshot: snapshot,
     );
   }
+
+  final bool availableForViewer;
+  final bool availableForAr;
 
   final String id;
 

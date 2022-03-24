@@ -66,6 +66,24 @@ class ProductGlbFileEditPage extends HookConsumerWidget {
                   image: viewModel.image,
                   onTap: viewModel.setImage,
                 ),
+                CheckboxListTile(
+                  value: viewModel.availableForViewer,
+                  title: const Text(
+                    'availableForViewer',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: viewModel.setAvailableForViewer,
+                ),
+                CheckboxListTile(
+                  value: viewModel.availableForAr,
+                  title: const Text(
+                    'availableForAr',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: viewModel.setAvailableForAr,
+                ),
                 viewModel.editing
                     ? const SizedBox()
                     : const Padding(

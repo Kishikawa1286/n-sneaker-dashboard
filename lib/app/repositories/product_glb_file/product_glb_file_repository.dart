@@ -141,6 +141,8 @@ class ProductGlbFileRepository {
   }
 
   Future<void> addProductGlbFile({
+    required bool availableForViewer,
+    required bool availableForAr,
     required ProductModel product,
     required String title,
     required String titleJp,
@@ -166,6 +168,8 @@ class ProductGlbFileRepository {
     );
     try {
       await updateProductGlbFile(
+        availableForViewer: availableForViewer,
+        availableForAr: availableForAr,
         product: product,
         productGlbFileId: documentRef.id,
         title: title,
@@ -178,6 +182,8 @@ class ProductGlbFileRepository {
   }
 
   Future<void> updateProductGlbFile({
+    required bool availableForViewer,
+    required bool availableForAr,
     required ProductModel product,
     required String productGlbFileId,
     required String title,
@@ -204,6 +210,8 @@ class ProductGlbFileRepository {
       throw Exception('failed to upload images.');
     }
     final productGlbFile = ProductGlbFileModel(
+      availableForViewer: availableForViewer,
+      availableForAr: availableForAr,
       id: productGlbFileId,
       filePath: '',
       fileExists: false,

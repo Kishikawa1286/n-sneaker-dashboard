@@ -48,9 +48,13 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
 
   ImageProvider? _image;
   PlatformFile? _productGlbFile;
+  bool _availableForViewer = true;
+  bool _availableForAr = true;
 
   ImageProvider? get image => _image;
   String get fileName => _productGlbFile?.name ?? '';
+  bool get availableForViewer => _availableForViewer;
+  bool get availableForAr => _availableForAr;
   bool get editing => _productGlbFileId.isNotEmpty;
   bool _uploading = false;
 
@@ -87,6 +91,18 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
     notifyListeners();
   }
 
+  // ignore: avoid_positional_boolean_parameters
+  void setAvailableForViewer(bool? value) {
+    _availableForViewer = value ?? false;
+    notifyListeners();
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  void setAvailableForAr(bool? value) {
+    _availableForAr = value ?? false;
+    notifyListeners();
+  }
+
   Future<void> submit() async {
     if (_uploading) {
       return;
@@ -105,6 +121,8 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
           return;
         }
         await _productGlbFileRepository.addProductGlbFile(
+          availableForViewer: availableForViewer,
+          availableForAr: availableForAr,
           product: product,
           title: titleController.text,
           titleJp: titleJpController.text,
@@ -113,6 +131,8 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
         );
       } else {
         await _productGlbFileRepository.updateProductGlbFile(
+          availableForViewer: availableForViewer,
+          availableForAr: availableForAr,
           product: product,
           productGlbFileId: _productGlbFileId,
           title: titleController.text,
