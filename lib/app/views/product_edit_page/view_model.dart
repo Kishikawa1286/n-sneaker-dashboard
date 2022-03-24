@@ -113,7 +113,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   }
 
   Future<void> addMarketImages() async {
-    final images = await _localFileRepository.pickImageFiles();
+    final images = await _localFileRepository.pickJpegFiles();
     if (images.isEmpty) {
       return;
     }
@@ -127,7 +127,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   }
 
   Future<void> setMarketTileImage() async {
-    final image = await _localFileRepository.pickImageFile();
+    final image = await _localFileRepository.pickJpegFile();
     if (image == null) {
       return;
     }
@@ -136,7 +136,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   }
 
   Future<void> setTransparentBackgroundImage() async {
-    final image = await _localFileRepository.pickImageFile();
+    final image = await _localFileRepository.pickPngFile();
     if (image == null) {
       return;
     }

@@ -70,7 +70,7 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
   }
 
   Future<void> setImage() async {
-    final im = await _localFileRepository.pickImageFile();
+    final im = await _localFileRepository.pickJpegFile();
     if (im == null) {
       return;
     }

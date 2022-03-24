@@ -23,12 +23,7 @@ class LocalFileRepository {
     return result.files.single;
   }
 
-  Future<MemoryImage?> pickImageFile() async {
-    final result = await _localFileInterface.pickImageFile();
-    if (result == null) {
-      return null;
-    }
-    final bytes = result.files.single.bytes;
+  MemoryImage? _handlePickedImageBytes(Uint8List? bytes) {
     if (bytes == null) {
       return null;
     }
@@ -36,14 +31,31 @@ class LocalFileRepository {
     return image;
   }
 
-  Future<List<MemoryImage>> pickImageFiles() async {
-    final result = await _localFileInterface.pickImageFiles();
+  Future<MemoryImage?> pickPngFile() async {
+    final result = await _localFileInterface.pickPngFile();
+    if (result == null) {
+      return null;
+    }
+    return _handlePickedImageBytes(result.files.single.bytes);
+  }
+
+  Future<MemoryImage?> pickJpegFile() async {
+    final result = await _localFileInterface.pickJpegFile();
+    if (result == null) {
+      return null;
+    }
+    return _handlePickedImageBytes(result.files.single.bytes);
+  }
+
+  Future<List<MemoryImage>> pickJpegFiles() async {
+    final result = await _localFileInterface.pickJpegFiles();
     if (result == null) {
       return [];
     }
-    final bytesList =
-        result.files.map((file) => file.bytes).whereType<Uint8List>().toList();
-    final images = bytesList.map(MemoryImage.new).toList();
+    final images = result.files
+        .map((file) => _handlePickedImageBytes(file.bytes))
+        .whereType<MemoryImage>()
+        .toList();
     return images;
   }
 }

@@ -15,7 +15,7 @@ class LocalFileInterface {
     return result;
   }
 
-  Future<FilePickerResult?> pickImageFile() async {
+  Future<FilePickerResult?> pickPngFile() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['png'],
@@ -23,11 +23,19 @@ class LocalFileInterface {
     return result;
   }
 
-  Future<FilePickerResult?> pickImageFiles() async {
+  Future<FilePickerResult?> pickJpegFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'jpeg'],
+    );
+    return result;
+  }
+
+  Future<FilePickerResult?> pickJpegFiles() async {
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
-      allowedExtensions: ['png'],
+      allowedExtensions: ['jpg', 'jpeg'],
     );
     return result;
   }
