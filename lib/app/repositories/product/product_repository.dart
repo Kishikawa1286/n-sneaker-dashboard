@@ -45,6 +45,7 @@ class ProductRepository {
   Future<String?> _generateDownloadUrlFromImageProvider(
     String productId,
     ImageProvider image,
+    String contentType,
   ) async {
     if (image is NetworkImage) {
       return image.url;
@@ -59,7 +60,7 @@ class ProductRepository {
       final url = await _firebaseStorageInterface.uploadFile(
         path: storagePath,
         bytes: image.bytes,
-        contentType: ContentType.png,
+        contentType: contentType,
       );
       return url;
     }
@@ -194,18 +195,26 @@ class ProductRepository {
     final imageUrls = (await Future.wait(
       images
           .map(
-            (image) => _generateDownloadUrlFromImageProvider(id, image),
+            (image) => _generateDownloadUrlFromImageProvider(
+              id,
+              image,
+              ContentType.jpeg,
+            ),
           )
           .toList(),
     ))
         .whereType<String>()
         .toList();
-    final tileImageUrl =
-        await _generateDownloadUrlFromImageProvider(id, tileImage);
+    final tileImageUrl = await _generateDownloadUrlFromImageProvider(
+      id,
+      tileImage,
+      ContentType.jpeg,
+    );
     final transparentBackgroundImageUrl =
         await _generateDownloadUrlFromImageProvider(
       id,
       transparentBackgroundImage,
+      ContentType.png,
     );
     if (imageUrls.isEmpty ||
         tileImageUrl == null ||

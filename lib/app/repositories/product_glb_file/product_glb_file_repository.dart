@@ -53,6 +53,7 @@ class ProductGlbFileRepository {
     String productId,
     String productGlbFileId,
     ImageProvider image,
+    String contentType,
   ) async {
     if (image is NetworkImage) {
       return image.url;
@@ -68,7 +69,7 @@ class ProductGlbFileRepository {
       final url = await _firebaseStorageInterface.uploadFile(
         path: storagePath,
         bytes: image.bytes,
-        contentType: ContentType.png,
+        contentType: contentType,
       );
       return url;
     }
@@ -192,6 +193,7 @@ class ProductGlbFileRepository {
               product.id,
               productGlbFileId,
               image,
+              ContentType.jpeg,
             ),
           )
           .toList(),
