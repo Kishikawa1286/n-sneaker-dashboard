@@ -132,14 +132,15 @@ class ProductRepository {
     required ImageProvider transparentBackgroundImage,
     required int priceJpy,
   }) async {
-    final documentRef = await _cloudFirestoreInterface.addData(
-      collectionPath: productsCollectionPath,
+    final id = lowercaseAlphabetRandomString();
+    await _cloudFirestoreInterface.setData(
+      documentPath: productDocumentPath(id),
       data: <String, dynamic>{},
     );
     try {
       await updateProduct(
         visible: visible,
-        id: documentRef.id,
+        id: id,
         title: title,
         vendor: vendor,
         series: series,
@@ -163,7 +164,9 @@ class ProductRepository {
       );
     } on Exception catch (e) {
       print(e);
-      await _cloudFirestoreInterface.deleteData(documentPath: documentRef.path);
+      await _cloudFirestoreInterface.deleteData(
+        documentPath: productDocumentPath(id),
+      );
     }
   }
 

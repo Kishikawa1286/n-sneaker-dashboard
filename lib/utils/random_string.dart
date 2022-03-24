@@ -9,3 +9,12 @@ String randomString([int length = 16]) {
           .join();
   return randomStr;
 }
+
+String lowercaseAlphabetRandomString([int length = 16]) {
+  const charset = 'abcdefghijklmnopqrstuvwxyz';
+  final random = Random.secure();
+  final randomStr =
+      List.generate(length, (_) => charset[random.nextInt(charset.length)])
+          .join();
+  return randomStr;
+}
