@@ -215,6 +215,9 @@ class ProductGlbFileRepository {
     await _firebaseStorageInterface.deleteFile(
       path: productGlbFilePath(productId, productGlbFileId),
     );
+    await _firebaseStorageInterface.deleteDirectory(
+      path: productGlbFileImageDirectoryPath(productId, productGlbFileId),
+    );
     await _cloudFirestoreInterface.deleteData(
       documentPath: productGlbFileDocumentPath(productId, productGlbFileId),
     );

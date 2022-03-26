@@ -1,12 +1,18 @@
 String productImagePath(String productId, String fileName) =>
     'product_images/$productId/$fileName';
 
+String productGlbFileImageDirectoryPath(
+  String productId,
+  String productGlbFileId,
+) =>
+    'product_glb_file_images/$productId/$productGlbFileId';
+
 String productGlbFileImagePath(
   String productId,
   String productGlbFileId,
   String fileName,
 ) =>
-    'product_glb_file_images/$productId/$productGlbFileId/$fileName';
+    '${productGlbFileImageDirectoryPath(productId, productGlbFileId)}/$fileName';
 
 String productGlbFileImagesFolderPath(
   String productId,

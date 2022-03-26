@@ -32,6 +32,13 @@ class FirebaseStorageInterface {
     await ref.delete();
   }
 
+  Future<void> deleteDirectory({required String path}) async {
+    final directoryRef = _storage.ref(path);
+    final listResult = await directoryRef.listAll();
+    listResult.items.forEach((item) => deleteFile(path: item.fullPath));
+    listResult.prefixes.forEach((ref) => deleteDirectory(path: ref.fullPath));
+  }
+
   Future<String?> generateDownloadUrlFromImageProvider({
     required String filePath,
     required ImageProvider image,
