@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final firebaseStorageInterface =
@@ -29,5 +30,26 @@ class FirebaseStorageInterface {
   Future<void> deleteFile({required String path}) async {
     final ref = _storage.ref(path);
     await ref.delete();
+  }
+
+  Future<String?> generateDownloadUrlFromImageProvider({
+    required String filePath,
+    required ImageProvider image,
+    required String contentType,
+  }) async {
+    if (image is NetworkImage) {
+      return image.url;
+    }
+
+    if (image is MemoryImage) {
+      final url = await uploadFile(
+        path: filePath,
+        bytes: image.bytes,
+        contentType: contentType,
+      );
+      return url;
+    }
+
+    return null;
   }
 }

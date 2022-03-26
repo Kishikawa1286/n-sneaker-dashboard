@@ -81,6 +81,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       return;
     }
     final product = await _productRepository.fetchProductById(_productId);
+    _visibleInMarket = product.visibleInMarket;
     _titleController.text = product.title;
     _vendorController.text = product.vendor;
     _seriesController.text = product.series;

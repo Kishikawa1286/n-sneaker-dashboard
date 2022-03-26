@@ -49,34 +49,6 @@ class ProductGlbFileRepository {
     );
   }
 
-  Future<String?> _generateDownloadUrlFromImageProvider(
-    String productId,
-    String productGlbFileId,
-    ImageProvider image,
-    String contentType,
-  ) async {
-    if (image is NetworkImage) {
-      return image.url;
-    }
-
-    // Image Picker で png 画像以外を弾くので png 固定でよい
-    if (image is MemoryImage) {
-      final storagePath = productGlbFileImagePath(
-        productId,
-        productGlbFileId,
-        '${randomString()}.png',
-      );
-      final url = await _firebaseStorageInterface.uploadFile(
-        path: storagePath,
-        bytes: image.bytes,
-        contentType: contentType,
-      );
-      return url;
-    }
-
-    return null;
-  }
-
   Future<List<ProductGlbFileModel>>
       _convertDocumentSnapshotListToProductGlbFileModelList(
     List<DocumentSnapshot<Map<String, dynamic>>> docs,
@@ -153,32 +125,33 @@ class ProductGlbFileRepository {
     if (bytes == null) {
       return;
     }
-    final documentRef = await _cloudFirestoreInterface.addData(
-      collectionPath: productGlbFilesCollectionPath(product.id),
-      data: <String, dynamic>{},
+    final glbFileId = lowercaseAlphabetRandomString();
+    await _cloudFirestoreInterface.setData(
+      documentPath: productGlbFileDocumentPath(product.id, glbFileId),
+      data: <String, dynamic>{
+        'id': glbFileId,
+        'created_at': Timestamp.now(),
+      },
     );
-    final storagePath = productGlbFilePath(
-      product.id,
-      documentRef.id,
-    );
+    final storagePath = productGlbFilePath(product.id, glbFileId);
     await _firebaseStorageInterface.uploadFile(
       path: storagePath,
       bytes: bytes,
       contentType: ContentType.glb,
     );
-    try {
-      await updateProductGlbFile(
-        availableForViewer: availableForViewer,
-        availableForAr: availableForAr,
-        product: product,
-        productGlbFileId: documentRef.id,
-        title: title,
-        titleJp: titleJp,
-        images: images,
-      );
-    } on Exception catch (e) {
-      print(e);
-    }
+    await updateProductGlbFile(
+      availableForViewer: availableForViewer,
+      availableForAr: availableForAr,
+      product: product,
+      productGlbFileId: glbFileId,
+      title: title,
+      titleJp: titleJp,
+      images: images,
+    );
+    await _cloudFirestoreInterface.setData(
+      documentPath: productDocumentPath(product.id),
+      data: <String, dynamic>{'number_of_glb_files': FieldValue.increment(1)},
+    );
   }
 
   Future<void> updateProductGlbFile({
@@ -195,11 +168,15 @@ class ProductGlbFileRepository {
     final imageUrls = (await Future.wait(
       images
           .map(
-            (image) => _generateDownloadUrlFromImageProvider(
-              product.id,
-              productGlbFileId,
-              image,
-              ContentType.jpeg,
+            (image) =>
+                _firebaseStorageInterface.generateDownloadUrlFromImageProvider(
+              filePath: productGlbFileImagePath(
+                product.id,
+                productGlbFileId,
+                '${randomString()}.jpeg',
+              ),
+              image: image,
+              contentType: ContentType.jpeg,
             ),
           )
           .toList(),
@@ -209,30 +186,23 @@ class ProductGlbFileRepository {
     if (imageUrls.isEmpty) {
       throw Exception('failed to upload images.');
     }
-    final productGlbFile = ProductGlbFileModel(
-      availableForViewer: availableForViewer,
-      availableForAr: availableForAr,
-      id: productGlbFileId,
-      filePath: '',
-      fileExists: false,
-      title: title,
-      titleJp: titleJp,
-      imageUrls: imageUrls,
-      createdAt: Timestamp.now(),
-      lastEditedAt: Timestamp.now(),
-      productId: product.id,
-      productTitle: product.title,
-      productVendor: product.vendor,
-      productSeries: product.series,
-      productTags: product.tags,
-      productTitleJp: product.titleJp,
-      productVendorJp: product.vendorJp,
-      productSeriesJp: product.seriesJp,
-      productTagsJp: product.tagsJp,
-    );
-    await _cloudFirestoreInterface.updateData(
+    await _cloudFirestoreInterface.setData(
       documentPath: documentPath,
-      data: productGlbFile.toMap(),
+      data: <String, dynamic>{
+        'title': title,
+        'title_jp': titleJp,
+        'images': imageUrls,
+        'last_edited_at': Timestamp.now(),
+        'product_id': product.id,
+        'product_title': product.title,
+        'product_vendor': product.vendor,
+        'product_series': product.series,
+        'product_tags': product.tags,
+        'product_title_jp': product.titleJp,
+        'product_vendor_jp': product.vendorJp,
+        'product_series_jp': product.seriesJp,
+        'product_tags_jp': product.tagsJp,
+      },
     );
   }
 
@@ -245,6 +215,10 @@ class ProductGlbFileRepository {
     );
     await _cloudFirestoreInterface.deleteData(
       documentPath: productGlbFileDocumentPath(productId, productGlbFileId),
+    );
+    await _cloudFirestoreInterface.setData(
+      documentPath: productDocumentPath(productId),
+      data: <String, dynamic>{'number_of_glb_files': FieldValue.increment(-1)},
     );
   }
 }

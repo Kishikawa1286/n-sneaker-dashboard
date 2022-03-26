@@ -42,31 +42,17 @@ class ProductRepository {
           .whereType<ProductModel>()
           .toList();
 
-  Future<String?> _generateDownloadUrlFromImageProvider(
-    String productId,
-    ImageProvider image,
-    String contentType,
-  ) async {
-    if (image is NetworkImage) {
-      return image.url;
-    }
-
-    // Image Picker で png 画像以外を弾くので png 固定でよい
-    if (image is MemoryImage) {
-      final storagePath = productImagePath(
-        productId,
-        '${randomString()}.png',
-      );
-      final url = await _firebaseStorageInterface.uploadFile(
-        path: storagePath,
-        bytes: image.bytes,
+  Future<String?> _generateDownloadUrlFromImageProvider({
+    required String productId,
+    required String fileName,
+    required ImageProvider image,
+    required String contentType,
+  }) =>
+      _firebaseStorageInterface.generateDownloadUrlFromImageProvider(
+        filePath: productImagePath(productId, fileName),
+        image: image,
         contentType: contentType,
       );
-      return url;
-    }
-
-    return null;
-  }
 
   Future<ProductModel> fetchProductById(String id) async {
     final snapshot = await _cloudFirestoreInterface.fetchDocumentSnapshot(
@@ -135,7 +121,13 @@ class ProductRepository {
     final id = lowercaseAlphabetRandomString();
     await _cloudFirestoreInterface.setData(
       documentPath: productDocumentPath(id),
-      data: <String, dynamic>{},
+      data: <String, dynamic>{
+        'id': id,
+        'number_of_favorite': 0,
+        'number_of_holders': 0,
+        'number_of_glb_files': 0,
+        'created_at': Timestamp.now(),
+      },
     );
     try {
       await updateProduct(
@@ -199,9 +191,10 @@ class ProductRepository {
       images
           .map(
             (image) => _generateDownloadUrlFromImageProvider(
-              id,
-              image,
-              ContentType.jpeg,
+              productId: id,
+              fileName: '${randomString()}.jpeg',
+              image: image,
+              contentType: ContentType.jpeg,
             ),
           )
           .toList(),
@@ -209,53 +202,49 @@ class ProductRepository {
         .whereType<String>()
         .toList();
     final tileImageUrl = await _generateDownloadUrlFromImageProvider(
-      id,
-      tileImage,
-      ContentType.jpeg,
+      productId: id,
+      fileName: '${randomString()}.jpeg',
+      image: tileImage,
+      contentType: ContentType.jpeg,
     );
     final transparentBackgroundImageUrl =
         await _generateDownloadUrlFromImageProvider(
-      id,
-      transparentBackgroundImage,
-      ContentType.png,
+      productId: id,
+      fileName: '${randomString()}.png',
+      image: transparentBackgroundImage,
+      contentType: ContentType.png,
     );
     if (imageUrls.isEmpty ||
         tileImageUrl == null ||
         transparentBackgroundImageUrl == null) {
       throw Exception('failed to upload images.');
     }
-    final product = ProductModel(
-      visibleInMarket: visibleInMarket,
-      id: id,
-      title: title,
-      vendor: vendor,
-      series: series,
-      tags: tags,
-      description: description,
-      collectionProductStatement: collectionProductStatement,
-      arStatement: arStatement,
-      otherStatement: otherStatement,
-      titleJp: titleJp,
-      vendorJp: vendorJp,
-      seriesJp: seriesJp,
-      tagsJp: tagsJp,
-      descriptionJp: descriptionJp,
-      collectionProductStatementJp: collectionProductStatementJp,
-      arStatementJp: arStatementJp,
-      otherStatementJp: otherStatementJp,
-      imageUrls: imageUrls,
-      tileImageUrls: [tileImageUrl],
-      transparentBackgroundImageUrls: [transparentBackgroundImageUrl],
-      priceJpy: priceJpy,
-      numberOfFavorite: 0,
-      numberOfHolders: 0,
-      numberOfGlbFiles: 0,
-      createdAt: Timestamp.now(),
-      lastEditedAt: Timestamp.now(),
-    );
-    await _cloudFirestoreInterface.updateData(
+    await _cloudFirestoreInterface.setData(
       documentPath: documentPath,
-      data: product.toMap(),
+      data: <String, dynamic>{
+        'title': title,
+        'vendor': vendor,
+        'series': series,
+        'tags': tags,
+        'description': description,
+        'collection_product_statement': collectionProductStatement,
+        'ar_statement': arStatement,
+        'other_statement': otherStatement,
+        'title_jp': titleJp,
+        'vendor_jp': vendorJp,
+        'series_jp': seriesJp,
+        'tags_jp': tagsJp,
+        'description_jp': descriptionJp,
+        'collection_product_statement_jp': collectionProductStatementJp,
+        'ar_statement_jp': arStatementJp,
+        'other_statement_jp': otherStatementJp,
+        'images': imageUrls,
+        'tile_images': [tileImageUrl],
+        'transparent_background_images': [transparentBackgroundImageUrl],
+        'price_jpy': priceJpy,
+        'vivsible_in_market': visibleInMarket,
+        'last_edited_at': Timestamp.now(),
+      },
     );
   }
 }

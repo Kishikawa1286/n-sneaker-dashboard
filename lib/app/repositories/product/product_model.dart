@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
   const ProductModel({
-    required this.visibleInMarket,
     required this.id,
     required this.title,
     required this.vendor,
@@ -29,6 +28,7 @@ class ProductModel {
     required this.collectionProductStatement,
     required this.arStatement,
     required this.otherStatement,
+    required this.visibleInMarket,
     this.documentSnapshot,
   });
 
@@ -40,7 +40,6 @@ class ProductModel {
       throw Exception('DocumentSnapshot has no data.');
     }
     return ProductModel(
-      visibleInMarket: data['vivsible_in_market'] as bool,
       id: data['id'] as String,
       title: data['title'] as String,
       vendor: data['vendor'] as String,
@@ -70,13 +69,13 @@ class ProductModel {
       numberOfFavorite: data['number_of_favorite'] as int,
       numberOfHolders: data['number_of_holders'] as int,
       numberOfGlbFiles: data['number_of_glb_files'] as int,
+      visibleInMarket: data['vivsible_in_market'] as bool,
       createdAt: data['created_at'] as Timestamp,
       lastEditedAt: data['last_edited_at'] as Timestamp,
       documentSnapshot: snapshot,
     );
   }
 
-  final bool visibleInMarket;
   final String id;
   // product data
   final String title;
@@ -107,38 +106,10 @@ class ProductModel {
   final int numberOfHolders;
   final int numberOfGlbFiles;
 
+  final bool visibleInMarket;
+
   final Timestamp createdAt;
   final Timestamp lastEditedAt;
 
   final DocumentSnapshot? documentSnapshot;
-
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'vivsible_in_market': visibleInMarket,
-        'id': id,
-        'title': title,
-        'vendor': vendor,
-        'series': series,
-        'tags': tags,
-        'description': description,
-        'collection_product_statement': collectionProductStatement,
-        'ar_statement': arStatement,
-        'other_statement': otherStatement,
-        'title_jp': titleJp,
-        'vendor_jp': vendorJp,
-        'series_jp': seriesJp,
-        'tags_jp': tagsJp,
-        'description_jp': descriptionJp,
-        'collection_product_statement_jp': collectionProductStatementJp,
-        'ar_statement_jp': arStatementJp,
-        'other_statement_jp': otherStatementJp,
-        'images': imageUrls,
-        'tile_images': tileImageUrls,
-        'transparent_background_images': transparentBackgroundImageUrls,
-        'price_jpy': priceJpy,
-        'number_of_favorite': numberOfFavorite,
-        'number_of_holders': numberOfHolders,
-        'number_of_glb_files': numberOfGlbFiles,
-        'created_at': createdAt,
-        'last_edited_at': lastEditedAt,
-      };
 }

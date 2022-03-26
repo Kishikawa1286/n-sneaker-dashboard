@@ -88,23 +88,5 @@ class ProductGlbFileModel {
   final String productSeriesJp;
   final List<String> productTagsJp;
 
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'id': id,
-        'title': title,
-        'title_jp': titleJp,
-        'images': imageUrls,
-        'created_at': createdAt,
-        'last_edited_at': lastEditedAt,
-        'product_id': productId,
-        'product_title': productTitle,
-        'product_vendor': productVendor,
-        'product_series': productSeries,
-        'product_tags': productTags,
-        'product_title_jp': productTitleJp,
-        'product_vendor_jp': productVendorJp,
-        'product_series_jp': productSeriesJp,
-        'product_tags_jp': productTagsJp,
-      };
-
   final DocumentSnapshot? documentSnapshot;
 }
