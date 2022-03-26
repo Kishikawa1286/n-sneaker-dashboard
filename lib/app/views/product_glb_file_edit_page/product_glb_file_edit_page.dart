@@ -34,7 +34,7 @@ class ProductGlbFileEditPage extends HookConsumerWidget {
         title: Text(
           productGlbFileId.isEmpty
               ? 'Add Product Glb File'
-              : 'Edit Product Glb File',
+              : 'Edit Product Glb File\n$productId > $productGlbFileId',
         ),
       ),
       body: SingleChildScrollView(
