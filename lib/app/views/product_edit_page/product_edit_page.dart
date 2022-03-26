@@ -20,7 +20,8 @@ class ProductEditPage extends HookConsumerWidget {
     final viewModel = ref.watch(productEditPageViewModelProvider(productId));
     return Scaffold(
       appBar: AppBar(
-        title: Text(productId.isEmpty ? 'Add Product' : 'Edit Product'),
+        title:
+            Text(productId.isEmpty ? 'Add Product' : 'Edit Product $productId'),
       ),
       body: SingleChildScrollView(
         child: GestureDetector(
