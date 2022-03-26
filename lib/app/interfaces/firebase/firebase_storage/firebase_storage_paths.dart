@@ -6,7 +6,7 @@ String productGlbFileImagePath(
   String productGlbFileId,
   String fileName,
 ) =>
-    'product_images/$productId/$productGlbFileId/$fileName';
+    'product_glb_file_images/$productId/$productGlbFileId/$fileName';
 
 String productGlbFileImagesFolderPath(
   String productId,

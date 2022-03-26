@@ -192,6 +192,8 @@ class ProductGlbFileRepository {
         'title': title,
         'title_jp': titleJp,
         'images': imageUrls,
+        'available_for_viewer': availableForViewer,
+        'available_for_ar': availableForAr,
         'last_edited_at': Timestamp.now(),
         'product_id': product.id,
         'product_title': product.title,
