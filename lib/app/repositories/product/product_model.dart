@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ProductModel {
   const ProductModel({
     required this.id,
+    required this.appStoreId,
+    required this.playStoreId,
     required this.title,
     required this.vendor,
     required this.series,
@@ -41,6 +43,8 @@ class ProductModel {
     }
     return ProductModel(
       id: data['id'] as String,
+      appStoreId: data['app_store_id'] as String,
+      playStoreId: data['play_store_id'] as String,
       title: data['title'] as String,
       vendor: data['vendor'] as String,
       series: data['series'] as String,
@@ -77,6 +81,10 @@ class ProductModel {
   }
 
   final String id;
+
+  final String appStoreId;
+  final String playStoreId;
+
   // product data
   final String title;
   final String vendor;

@@ -4,12 +4,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../utils/view_model_change_notifier.dart';
 import '../../repositories/local_file/local_file_repository.dart';
 import '../../repositories/product/product_repository.dart';
+import '../../repositories/product_glb_file/product_glb_file_repository.dart';
 
 final productEditPageViewModelProvider =
     AutoDisposeChangeNotifierProviderFamily<ProductEditPageViewModel, String>(
   (ref, id) => ProductEditPageViewModel(
     id,
     ref.read(productRepositoryProvider),
+    ref.read(productGlbFileRepositoryProvider),
     ref.read(localFileRepositoryProvider),
   ),
 );
@@ -18,6 +20,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   ProductEditPageViewModel(
     this._productId,
     this._productRepository,
+    this._productGlbFileRepository,
     this._localFileRepository,
   ) {
     _init();
@@ -25,7 +28,11 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
 
   final String _productId;
   final ProductRepository _productRepository;
+  final ProductGlbFileRepository _productGlbFileRepository;
   final LocalFileRepository _localFileRepository;
+
+  final _appStoreIdController = TextEditingController();
+  final _playStoreIdController = TextEditingController();
 
   final _titleController = TextEditingController();
   final _vendorController = TextEditingController();
@@ -44,6 +51,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final _otherStatementJpController = TextEditingController();
   final _priceJpyController = TextEditingController();
 
+  TextEditingController get appStoreIdController => _appStoreIdController;
+  TextEditingController get playStoreIdController => _playStoreIdController;
   TextEditingController get titleController => _titleController;
   TextEditingController get vendorController => _vendorController;
   TextEditingController get seriesController => _seriesController;
@@ -159,6 +168,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
           visibleInMarket: _visibleInMarket,
+          appStoreId: _appStoreIdController.text,
+          playStoreId: _playStoreIdController.text,
           title: _titleController.text,
           vendor: _vendorController.text,
           series: _seriesController.text,
@@ -186,6 +197,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
         await _productRepository.updateProduct(
           visibleInMarket: _visibleInMarket,
           id: _productId,
+          appStoreId: _appStoreIdController.text,
+          playStoreId: _playStoreIdController.text,
           title: _titleController.text,
           vendor: _vendorController.text,
           series: _seriesController.text,
@@ -208,6 +221,15 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
           tileImage: tile,
           transparentBackgroundImage: transparentBg,
           priceJpy: int.tryParse(priceJpyController.text) ?? 0,
+        );
+        final glbFileModels =
+            await _productGlbFileRepository.fetchProductsGlbFiles(_productId);
+        final product = await _productRepository.fetchProductById(_productId);
+        glbFileModels.forEach(
+          (glbFileModel) => _productGlbFileRepository.updateOnlyProductData(
+            product: product,
+            productGlbFileId: glbFileModel.id,
+          ),
         );
       }
     } on Exception catch (e) {

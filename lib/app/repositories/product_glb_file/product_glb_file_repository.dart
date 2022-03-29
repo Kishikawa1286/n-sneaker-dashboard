@@ -196,6 +196,8 @@ class ProductGlbFileRepository {
         'available_for_ar': availableForAr,
         'last_edited_at': Timestamp.now(),
         'product_id': product.id,
+        'product_app_store_id': product.appStoreId,
+        'product_play_store_id': product.playStoreId,
         'product_title': product.title,
         'product_vendor': product.vendor,
         'product_series': product.series,
@@ -226,4 +228,26 @@ class ProductGlbFileRepository {
       data: <String, dynamic>{'number_of_glb_files': FieldValue.increment(-1)},
     );
   }
+
+  Future<void> updateOnlyProductData({
+    required ProductModel product,
+    required String productGlbFileId,
+  }) =>
+      _cloudFirestoreInterface.setData(
+        documentPath: productGlbFileDocumentPath(product.id, productGlbFileId),
+        data: <String, dynamic>{
+          'last_edited_at': Timestamp.now(),
+          'product_id': product.id,
+          'product_app_store_id': product.appStoreId,
+          'product_play_store_id': product.playStoreId,
+          'product_title': product.title,
+          'product_vendor': product.vendor,
+          'product_series': product.series,
+          'product_tags': product.tags,
+          'product_title_jp': product.titleJp,
+          'product_vendor_jp': product.vendorJp,
+          'product_series_jp': product.seriesJp,
+          'product_tags_jp': product.tagsJp,
+        },
+      );
 }
