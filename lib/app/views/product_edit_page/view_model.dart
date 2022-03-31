@@ -89,6 +89,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     if (_productId.isEmpty) {
       return;
     }
+    _appStoreIdController.text = 'nsneaker.app_store.$_productId';
+    _playStoreIdController.text = 'nsneaker.play_store.$_productId';
     final product = await _productRepository.fetchProductById(_productId);
     _visibleInMarket = product.visibleInMarket;
     _titleController.text = product.title;
