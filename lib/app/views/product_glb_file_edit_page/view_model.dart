@@ -69,6 +69,8 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
     );
     _titleController.text = productGlbFile.title;
     _titleJpController.text = productGlbFile.titleJp;
+    _availableForViewer = productGlbFile.availableForViewer;
+    _availableForAr = productGlbFile.availableForAr;
     _image = NetworkImage(productGlbFile.imageUrls.first);
     notifyListeners();
   }
