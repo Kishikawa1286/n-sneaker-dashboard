@@ -196,8 +196,6 @@ class ProductGlbFileRepository {
         'available_for_ar': availableForAr,
         'last_edited_at': Timestamp.now(),
         'product_id': product.id,
-        'product_app_store_id': product.appStoreId,
-        'product_play_store_id': product.playStoreId,
         'product_title': product.title,
         'product_vendor': product.vendor,
         'product_series': product.series,
@@ -238,8 +236,6 @@ class ProductGlbFileRepository {
         data: <String, dynamic>{
           'last_edited_at': Timestamp.now(),
           'product_id': product.id,
-          'product_app_store_id': product.appStoreId,
-          'product_play_store_id': product.playStoreId,
           'product_title': product.title,
           'product_vendor': product.vendor,
           'product_series': product.series,

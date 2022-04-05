@@ -31,9 +31,6 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final ProductGlbFileRepository _productGlbFileRepository;
   final LocalFileRepository _localFileRepository;
 
-  final _appStoreIdController = TextEditingController();
-  final _playStoreIdController = TextEditingController();
-
   final _titleController = TextEditingController();
   final _vendorController = TextEditingController();
   final _seriesController = TextEditingController();
@@ -51,8 +48,6 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final _otherStatementJpController = TextEditingController();
   final _priceJpyController = TextEditingController();
 
-  TextEditingController get appStoreIdController => _appStoreIdController;
-  TextEditingController get playStoreIdController => _playStoreIdController;
   TextEditingController get titleController => _titleController;
   TextEditingController get vendorController => _vendorController;
   TextEditingController get seriesController => _seriesController;
@@ -90,8 +85,6 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     if (_productId.isEmpty) {
       return;
     }
-    _appStoreIdController.text = 'nsneaker.app_store.$_productId';
-    _playStoreIdController.text = 'nsneaker.play_store.$_productId';
     final product = await _productRepository.fetchProductById(_productId);
     _visibleInMarket = product.visibleInMarket;
     _titleController.text = product.title;
@@ -172,8 +165,6 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
           visibleInMarket: _visibleInMarket,
-          appStoreId: _appStoreIdController.text,
-          playStoreId: _playStoreIdController.text,
           title: _titleController.text,
           vendor: _vendorController.text,
           series: _seriesController.text,
@@ -201,8 +192,6 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
         await _productRepository.updateProduct(
           visibleInMarket: _visibleInMarket,
           id: _productId,
-          appStoreId: _appStoreIdController.text,
-          playStoreId: _playStoreIdController.text,
           title: _titleController.text,
           vendor: _vendorController.text,
           series: _seriesController.text,

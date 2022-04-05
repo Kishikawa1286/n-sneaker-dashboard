@@ -97,8 +97,6 @@ class ProductRepository {
 
   Future<void> addProduct({
     required bool visibleInMarket,
-    required String appStoreId,
-    required String playStoreId,
     required String title,
     required String vendor,
     required String series,
@@ -135,8 +133,6 @@ class ProductRepository {
       await updateProduct(
         visibleInMarket: visibleInMarket,
         id: id,
-        appStoreId: appStoreId,
-        playStoreId: playStoreId,
         title: title,
         vendor: vendor,
         series: series,
@@ -169,8 +165,6 @@ class ProductRepository {
   Future<void> updateProduct({
     required bool visibleInMarket,
     required String id,
-    required String appStoreId,
-    required String playStoreId,
     required String title,
     required String vendor,
     required String series,
@@ -228,8 +222,6 @@ class ProductRepository {
     await _cloudFirestoreInterface.setData(
       documentPath: documentPath,
       data: <String, dynamic>{
-        'app_store_id': appStoreId,
-        'play_store_id': playStoreId,
         'title': title,
         'vendor': vendor,
         'series': series,

@@ -41,14 +41,6 @@ class ProductEditPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   EditPageTextFormField(
-                    controller: viewModel.appStoreIdController,
-                    hintText: 'appStoreId',
-                  ),
-                  EditPageTextFormField(
-                    controller: viewModel.playStoreIdController,
-                    hintText: 'playStoreId',
-                  ),
-                  EditPageTextFormField(
                     controller: viewModel.titleController,
                     hintText: 'title',
                   ),
