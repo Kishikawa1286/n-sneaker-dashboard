@@ -13,8 +13,8 @@ class ProductListPageListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
         leading: Image.network(product.tileImageUrls.first),
-        title: Text(product.titleJp),
-        subtitle: Text(product.id),
+        title: SelectableText(product.titleJp),
+        subtitle: SelectableText(product.id),
         onTap: () {},
         trailing: Container(
           constraints: const BoxConstraints(maxWidth: 250),

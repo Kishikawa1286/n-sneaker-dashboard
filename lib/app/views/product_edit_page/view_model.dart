@@ -84,6 +84,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   bool get visibleInMarket => _visibleInMarket;
 
   bool _uploading = false;
+  bool get uploading => _uploading;
 
   Future<void> _init() async {
     if (_productId.isEmpty) {

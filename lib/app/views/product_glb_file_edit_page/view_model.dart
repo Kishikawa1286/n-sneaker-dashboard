@@ -56,7 +56,9 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
   bool get availableForViewer => _availableForViewer;
   bool get availableForAr => _availableForAr;
   bool get editing => _productGlbFileId.isNotEmpty;
+
   bool _uploading = false;
+  bool get uploading => _uploading;
 
   Future<void> _init() async {
     if (_productGlbFileId.isEmpty) {
