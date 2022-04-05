@@ -95,6 +95,20 @@ class ProductRepository {
     return _convertDocumentSnapshotListToProductModelList(snapshot.docs);
   }
 
+  Future<List<ProductModel>> fetchAll({
+    int limit = 128,
+    ProductModel? startAfter,
+  }) async {
+    final fetched = await fetchProducts(limit: limit, startAfter: startAfter);
+    if (fetched.length < limit) {
+      return fetched;
+    }
+    return [
+      ...fetched,
+      ...await fetchAll(limit: limit, startAfter: fetched.last),
+    ];
+  }
+
   Future<void> addProduct({
     required bool visibleInMarket,
     required String title,

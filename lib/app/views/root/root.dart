@@ -4,12 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../utils/common_widgets/loading_page.dart';
 import '../../services/account/account_service.dart';
+import '../collection_product_manage_page/collection_product_manage_page.dart';
 import '../product_list_page/product_list_page.dart';
 import '../sign_in_page/sign_in_page.dart';
 import 'components/drawer_list_tile.dart';
 import 'view_model.dart';
 
-const _titles = ['product'];
+const _titles = ['product', 'collection product'];
 
 class Root extends HookConsumerWidget {
   const Root();
@@ -25,13 +26,8 @@ class Root extends HookConsumerWidget {
           return const SignInPage();
         }
         return Scaffold(
-          key: viewModel.scaffoldKey,
           appBar: AppBar(
             title: Text(_titles[viewModel.selectedIndex]),
-            leading: IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: viewModel.scaffoldKey.currentState?.openDrawer,
-            ),
           ),
           drawer: Drawer(
             child: ListView(
@@ -55,6 +51,9 @@ class Root extends HookConsumerWidget {
               final selectedIndex = viewModel.selectedIndex;
               if (selectedIndex == 0) {
                 return const ProductListPage();
+              }
+              if (selectedIndex == 1) {
+                return const CollectionProductManagePage();
               }
               return const LoadingPage();
             },
