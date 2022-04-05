@@ -116,6 +116,7 @@ class ProductGlbFileEditPageViewModel extends ViewModelChangeNotifier {
       return;
     }
     _uploading = true;
+    notifyListeners();
     try {
       final product = await _productRepository.fetchProductById(_productId);
       if (_productGlbFileId.isEmpty) {

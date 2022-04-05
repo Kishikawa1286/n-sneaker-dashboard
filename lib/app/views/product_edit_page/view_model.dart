@@ -167,6 +167,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       return;
     }
     _uploading = true;
+    notifyListeners();
     try {
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
