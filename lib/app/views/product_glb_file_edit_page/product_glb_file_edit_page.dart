@@ -31,7 +31,7 @@ class ProductGlbFileEditPage extends HookConsumerWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: SelectableText(
           productGlbFileId.isEmpty
               ? 'Add Product Glb File'
               : 'Edit Product Glb File\n$productId > $productGlbFileId',

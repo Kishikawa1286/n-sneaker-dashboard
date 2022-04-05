@@ -20,7 +20,7 @@ class ProductEditPage extends HookConsumerWidget {
     final viewModel = ref.watch(productEditPageViewModelProvider(productId));
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: SelectableText(
           productId.isEmpty ? 'Add Product' : 'Edit Product\n$productId',
         ),
       ),

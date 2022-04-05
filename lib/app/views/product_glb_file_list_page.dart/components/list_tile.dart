@@ -16,8 +16,8 @@ class ProductGlbFileListPageListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
         leading: Image.network(productGlbFile.imageUrls.first),
-        title: Text(productGlbFile.titleJp),
-        subtitle: Text(productGlbFile.id),
+        title: SelectableText(productGlbFile.titleJp),
+        subtitle: SelectableText(productGlbFile.id),
         onTap: () {},
         trailing: Container(
           constraints: const BoxConstraints(maxWidth: 250),
