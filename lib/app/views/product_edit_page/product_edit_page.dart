@@ -41,8 +41,8 @@ class ProductEditPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   EditPageTextFormField(
-                    controller: viewModel.adaptyProductIdController,
-                    hintText: 'adaptyProductId',
+                    controller: viewModel.adaptyPaywallIdController,
+                    hintText: 'adaptyPaywallId',
                   ),
                   EditPageTextFormField(
                     controller: viewModel.titleController,

@@ -110,7 +110,7 @@ class ProductRepository {
   }
 
   Future<void> addProduct({
-    required String adaptyProductId,
+    required String adaptyPaywallId,
     required bool visibleInMarket,
     required String title,
     required String vendor,
@@ -146,7 +146,7 @@ class ProductRepository {
     );
     try {
       await updateProduct(
-        adaptyProductId: adaptyProductId,
+        adaptyPaywallId: adaptyPaywallId,
         visibleInMarket: visibleInMarket,
         id: id,
         title: title,
@@ -179,7 +179,7 @@ class ProductRepository {
   }
 
   Future<void> updateProduct({
-    required String adaptyProductId,
+    required String adaptyPaywallId,
     required bool visibleInMarket,
     required String id,
     required String title,
@@ -239,7 +239,7 @@ class ProductRepository {
     await _cloudFirestoreInterface.setData(
       documentPath: documentPath,
       data: <String, dynamic>{
-        'adapty_product_id': adaptyProductId,
+        'adapty_product_id': adaptyPaywallId,
         'title': title,
         'vendor': vendor,
         'series': series,

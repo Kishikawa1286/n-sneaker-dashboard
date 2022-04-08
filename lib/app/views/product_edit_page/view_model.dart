@@ -35,7 +35,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final LocalFileRepository _localFileRepository;
   final CollectionProductRepository _collectionProductRepository;
 
-  final _adaptyProductIdController = TextEditingController();
+  final _adaptyPaywallIdController = TextEditingController();
   final _titleController = TextEditingController();
   final _vendorController = TextEditingController();
   final _seriesController = TextEditingController();
@@ -53,8 +53,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final _otherStatementJpController = TextEditingController();
   final _priceJpyController = TextEditingController();
 
-  TextEditingController get adaptyProductIdController =>
-      _adaptyProductIdController;
+  TextEditingController get adaptyPaywallIdController =>
+      _adaptyPaywallIdController;
   TextEditingController get titleController => _titleController;
   TextEditingController get vendorController => _vendorController;
   TextEditingController get seriesController => _seriesController;
@@ -171,7 +171,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     try {
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
-          adaptyProductId: _adaptyProductIdController.text,
+          adaptyPaywallId: _adaptyPaywallIdController.text,
           visibleInMarket: _visibleInMarket,
           title: _titleController.text,
           vendor: _vendorController.text,
@@ -198,7 +198,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
         );
       } else {
         await _productRepository.updateProduct(
-          adaptyProductId: _adaptyProductIdController.text,
+          adaptyPaywallId: _adaptyPaywallIdController.text,
           visibleInMarket: _visibleInMarket,
           id: _productId,
           title: _titleController.text,
