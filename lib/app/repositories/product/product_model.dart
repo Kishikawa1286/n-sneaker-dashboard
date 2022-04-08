@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ProductModel {
   const ProductModel({
     required this.id,
+    required this.adaptyProductId,
     required this.title,
     required this.vendor,
     required this.series,
@@ -40,43 +41,53 @@ class ProductModel {
       throw Exception('DocumentSnapshot has no data.');
     }
     return ProductModel(
-      id: data['id'] as String,
-      title: data['title'] as String,
-      vendor: data['vendor'] as String,
-      series: data['series'] as String,
+      id: (data['id'] as String?) ?? '',
+      adaptyProductId: (data['adapty_product_id'] as String?) ?? '',
+      title: (data['title'] as String?) ?? '',
+      vendor: (data['vendor'] as String?) ?? '',
+      series: (data['series'] as String?) ?? '',
       tags:
           List<String>.from(data['tags'] as List<dynamic>? ?? const <String>[]),
-      description: data['description'] as String,
+      description: (data['description'] as String?) ?? '',
       collectionProductStatement:
-          data['collection_product_statement'] as String,
-      arStatement: data['ar_statement'] as String,
-      otherStatement: data['other_statement'] as String,
-      titleJp: data['title_jp'] as String,
-      vendorJp: data['vendor_jp'] as String,
-      seriesJp: data['series_jp'] as String,
-      tagsJp: List<String>.from(data['tags_jp'] as List<dynamic>),
-      descriptionJp: data['description_jp'] as String,
-      collectionProductStatementJp:
-          data['collection_product_statement_jp'] as String,
-      arStatementJp: data['ar_statement_jp'] as String,
-      otherStatementJp: data['other_statement_jp'] as String,
-      imageUrls: List<String>.from(data['images'] as List<dynamic>),
-      tileImageUrls: List<String>.from(data['tile_images'] as List<dynamic>),
-      transparentBackgroundImageUrls: List<String>.from(
-        data['transparent_background_images'] as List<dynamic>,
+          (data['collection_product_statement'] as String?) ?? '',
+      arStatement: (data['ar_statement'] as String?) ?? '',
+      otherStatement: (data['other_statement'] as String?) ?? '',
+      titleJp: (data['title_jp'] as String?) ?? '',
+      vendorJp: (data['vendor_jp'] as String?) ?? '',
+      seriesJp: (data['series_jp'] as String?) ?? '',
+      tagsJp: List<String>.from(
+        data['tags_jp'] as List<dynamic>? ?? const <String>[],
       ),
-      priceJpy: data['price_jpy'] as int,
-      numberOfFavorite: data['number_of_favorite'] as int,
-      numberOfHolders: data['number_of_holders'] as int,
-      numberOfGlbFiles: data['number_of_glb_files'] as int,
-      visibleInMarket: data['vivsible_in_market'] as bool,
-      createdAt: data['created_at'] as Timestamp,
-      lastEditedAt: data['last_edited_at'] as Timestamp,
+      descriptionJp: (data['description_jp'] as String?) ?? '',
+      collectionProductStatementJp:
+          (data['collection_product_statement_jp'] as String?) ?? '',
+      arStatementJp: (data['ar_statement_jp'] as String?) ?? '',
+      otherStatementJp: (data['other_statement_jp'] as String?) ?? '',
+      imageUrls: List<String>.from(
+        data['images'] as List<dynamic>? ?? const <String>[],
+      ),
+      tileImageUrls: List<String>.from(
+        data['tile_images'] as List<dynamic>? ?? const <String>[],
+      ),
+      transparentBackgroundImageUrls: List<String>.from(
+        data['transparent_background_images'] as List<dynamic>? ??
+            const <String>[],
+      ),
+      priceJpy: (data['price_jpy'] as int?) ?? 0,
+      numberOfFavorite: (data['number_of_favorite'] as int?) ?? 0,
+      numberOfHolders: (data['number_of_holders'] as int?) ?? 0,
+      numberOfGlbFiles: (data['number_of_glb_files'] as int?) ?? 0,
+      visibleInMarket: (data['vivsible_in_market'] as bool?) ?? false,
+      createdAt: (data['created_at'] as Timestamp?) ?? Timestamp.now(),
+      lastEditedAt: (data['last_edited_at'] as Timestamp?) ?? Timestamp.now(),
       documentSnapshot: snapshot,
     );
   }
 
   final String id;
+
+  final String adaptyProductId;
 
   // product data
   final String title;
