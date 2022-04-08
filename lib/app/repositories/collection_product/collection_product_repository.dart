@@ -57,7 +57,7 @@ class CollectionProductRepository {
     return true;
   }
 
-  Future<List<CollectionProductModel>> fetchFromFirestore(
+  Future<List<CollectionProductModel>> fetchFromFirestoreByAccountId(
     String accountId, {
     int limit = 16,
     CollectionProductModel? startAfter,
@@ -95,12 +95,12 @@ class CollectionProductRepository {
     );
   }
 
-  Future<List<CollectionProductModel>> _fetchAll(
+  Future<List<CollectionProductModel>> _fetchAllForAccount(
     String accountId, {
     int limit = 128,
     CollectionProductModel? startAfter,
   }) async {
-    final fetched = await fetchFromFirestore(
+    final fetched = await fetchFromFirestoreByAccountId(
       accountId,
       limit: limit,
       startAfter: startAfter,
@@ -110,8 +110,113 @@ class CollectionProductRepository {
     }
     return [
       ...fetched,
-      ...await _fetchAll(accountId, limit: limit, startAfter: fetched.last),
+      ...await _fetchAllForAccount(
+        accountId,
+        limit: limit,
+        startAfter: fetched.last,
+      ),
     ];
+  }
+
+  Future<List<CollectionProductModel>> fetchFromFirestoreByProductId(
+    String productId, {
+    int limit = 16,
+    CollectionProductModel? startAfter,
+  }) async {
+    if (startAfter == null) {
+      // startAfterを指定しない
+      final snapshot =
+          await _cloudFirestoreInterface.collectionFuture<Map<String, dynamic>>(
+        collectionPath: collectionProductsCollectionPath,
+        queryBuilder: (query) => query
+            .where('product_id', isEqualTo: productId)
+            .orderBy('created_at', descending: true)
+            .limit(limit),
+      );
+      return _convertDocumentSnapshotListToCollectionProductModelList(
+        snapshot.docs,
+      );
+    }
+    final startAfterDocumentSnapshot = startAfter.documentSnapshot;
+    // 通常 not null だが nullble を解除するためにチェック
+    if (startAfterDocumentSnapshot == null) {
+      return [];
+    }
+    final snapshot =
+        await _cloudFirestoreInterface.collectionFuture<Map<String, dynamic>>(
+      collectionPath: collectionProductsCollectionPath,
+      queryBuilder: (query) => query
+          .where('product_id', isEqualTo: productId)
+          .orderBy('created_at', descending: true)
+          .limit(limit)
+          .startAfterDocument(startAfterDocumentSnapshot),
+    );
+    return _convertDocumentSnapshotListToCollectionProductModelList(
+      snapshot.docs,
+    );
+  }
+
+  Future<List<CollectionProductModel>> _fetchAllForProduct(
+    String productId, {
+    int limit = 128,
+    CollectionProductModel? startAfter,
+  }) async {
+    final fetched = await fetchFromFirestoreByProductId(
+      productId,
+      limit: limit,
+      startAfter: startAfter,
+    );
+    if (fetched.length < limit) {
+      return fetched;
+    }
+    return [
+      ...fetched,
+      ...await fetchFromFirestoreByProductId(
+        productId,
+        limit: limit,
+        startAfter: fetched.last,
+      ),
+    ];
+  }
+
+  Future<void> updateProductData(ProductModel product) async {
+    final allCollectionProductsForProduct =
+        await _fetchAllForProduct(product.id);
+    final allCollectionProductIdsForProduct = allCollectionProductsForProduct
+        .map((collectionProduct) => collectionProduct.id)
+        .toList();
+    await Future.wait(
+      allCollectionProductIdsForProduct.map(
+        (id) => _cloudFirestoreInterface.setData(
+          documentPath: collectionProductDocumentPath(id),
+          data: <String, dynamic>{
+            'last_edited_at': Timestamp.now(),
+            'product_id': product.id,
+            'title': product.title,
+            'vendor': product.vendor,
+            'series': product.series,
+            'tags': product.tags,
+            'description': product.description,
+            'collection_product_statement': product.collectionProductStatement,
+            'ar_statement': product.arStatement,
+            'other_statement': product.otherStatement,
+            'title_jp': product.titleJp,
+            'vendor_jp': product.vendorJp,
+            'series_jp': product.seriesJp,
+            'tags_jp': product.tagsJp,
+            'description_jp': product.descriptionJp,
+            'collection_product_statement_jp':
+                product.collectionProductStatementJp,
+            'ar_statement_jp': product.arStatementJp,
+            'other_statement_jp': product.otherStatementJp,
+            'images': product.imageUrls,
+            'tile_images': product.tileImageUrls,
+            'transparent_background_images':
+                product.transparentBackgroundImageUrls,
+          },
+        ),
+      ),
+    );
   }
 
   Future<void> addCollectionProduct({
@@ -183,7 +288,7 @@ class CollectionProductRepository {
     required String accountId,
     required List<ProductModel> products,
   }) async {
-    final currentAllCollectionProducts = await _fetchAll(accountId);
+    final currentAllCollectionProducts = await _fetchAllForAccount(accountId);
     final productIdsOfcurrentAllCollectionProducts =
         currentAllCollectionProducts
             .map((collectionProduct) => collectionProduct.productId)

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../utils/view_model_change_notifier.dart';
+import '../../repositories/collection_product/collection_product_repository.dart';
 import '../../repositories/local_file/local_file_repository.dart';
 import '../../repositories/product/product_repository.dart';
 import '../../repositories/product_glb_file/product_glb_file_repository.dart';
@@ -13,6 +14,7 @@ final productEditPageViewModelProvider =
     ref.read(productRepositoryProvider),
     ref.read(productGlbFileRepositoryProvider),
     ref.read(localFileRepositoryProvider),
+    ref.read(collectionProductRepositoryProvider),
   ),
 );
 
@@ -22,6 +24,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     this._productRepository,
     this._productGlbFileRepository,
     this._localFileRepository,
+    this._collectionProductRepository,
   ) {
     _init();
   }
@@ -30,6 +33,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final ProductRepository _productRepository;
   final ProductGlbFileRepository _productGlbFileRepository;
   final LocalFileRepository _localFileRepository;
+  final CollectionProductRepository _collectionProductRepository;
 
   final _titleController = TextEditingController();
   final _vendorController = TextEditingController();
@@ -215,15 +219,18 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
           transparentBackgroundImage: transparentBg,
           priceJpy: int.tryParse(priceJpyController.text) ?? 0,
         );
+        final product = await _productRepository.fetchProductById(_productId);
+        // glb file のドキュメントを更新
         final glbFileModels =
             await _productGlbFileRepository.fetchProductsGlbFiles(_productId);
-        final product = await _productRepository.fetchProductById(_productId);
         glbFileModels.forEach(
           (glbFileModel) => _productGlbFileRepository.updateOnlyProductData(
             product: product,
             productGlbFileId: glbFileModel.id,
           ),
         );
+        // collection productのドキュメントを更新
+        await _collectionProductRepository.updateProductData(product);
       }
     } on Exception catch (e) {
       print(e);
