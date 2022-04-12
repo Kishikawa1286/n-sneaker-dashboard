@@ -111,6 +111,7 @@ class ProductRepository {
 
   Future<void> addProduct({
     required String adaptyPaywallId,
+    required String restorableAdaptyVendorProductIdsAsString,
     required bool visibleInMarket,
     required String title,
     required String vendor,
@@ -147,6 +148,8 @@ class ProductRepository {
     try {
       await updateProduct(
         adaptyPaywallId: adaptyPaywallId,
+        restorableAdaptyVendorProductIdsAsString:
+            restorableAdaptyVendorProductIdsAsString,
         visibleInMarket: visibleInMarket,
         id: id,
         title: title,
@@ -180,6 +183,7 @@ class ProductRepository {
 
   Future<void> updateProduct({
     required String adaptyPaywallId,
+    required String restorableAdaptyVendorProductIdsAsString,
     required bool visibleInMarket,
     required String id,
     required String title,
@@ -236,10 +240,14 @@ class ProductRepository {
         transparentBackgroundImageUrl == null) {
       throw Exception('failed to upload images.');
     }
+    final restorableAdaptyVendorProductIds =
+        restorableAdaptyVendorProductIdsAsString.split(',');
     await _cloudFirestoreInterface.setData(
       documentPath: documentPath,
       data: <String, dynamic>{
-        'adapty_product_id': adaptyPaywallId,
+        'adapty_paywall_id': adaptyPaywallId,
+        'restorable_adapty_vendor_product_ids':
+            restorableAdaptyVendorProductIds,
         'title': title,
         'vendor': vendor,
         'series': series,

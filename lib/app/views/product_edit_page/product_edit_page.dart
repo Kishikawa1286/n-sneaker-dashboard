@@ -45,6 +45,12 @@ class ProductEditPage extends HookConsumerWidget {
                     hintText: 'adaptyPaywallId',
                   ),
                   EditPageTextFormField(
+                    controller:
+                        viewModel.restorableAdaptyVendorProductIdsController,
+                    hintText:
+                        'restorableAdaptyVendorProductIds(separated by ",")',
+                  ),
+                  EditPageTextFormField(
                     controller: viewModel.titleController,
                     hintText: 'title',
                   ),

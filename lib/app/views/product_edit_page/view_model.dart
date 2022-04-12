@@ -36,6 +36,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final CollectionProductRepository _collectionProductRepository;
 
   final _adaptyPaywallIdController = TextEditingController();
+  final _restorableAdaptyVendorProductIdsController = TextEditingController();
   final _titleController = TextEditingController();
   final _vendorController = TextEditingController();
   final _seriesController = TextEditingController();
@@ -55,6 +56,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
 
   TextEditingController get adaptyPaywallIdController =>
       _adaptyPaywallIdController;
+  TextEditingController get restorableAdaptyVendorProductIdsController =>
+      _restorableAdaptyVendorProductIdsController;
   TextEditingController get titleController => _titleController;
   TextEditingController get vendorController => _vendorController;
   TextEditingController get seriesController => _seriesController;
@@ -93,6 +96,9 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       return;
     }
     final product = await _productRepository.fetchProductById(_productId);
+    _adaptyPaywallIdController.text = product.adaptyPaywallId;
+    _restorableAdaptyVendorProductIdsController.text =
+        product.restorableAdaptyVendorProductIds.join(',');
     _visibleInMarket = product.visibleInMarket;
     _titleController.text = product.title;
     _vendorController.text = product.vendor;
@@ -172,6 +178,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
           adaptyPaywallId: _adaptyPaywallIdController.text,
+          restorableAdaptyVendorProductIdsAsString:
+              _restorableAdaptyVendorProductIdsController.text,
           visibleInMarket: _visibleInMarket,
           title: _titleController.text,
           vendor: _vendorController.text,
@@ -199,6 +207,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       } else {
         await _productRepository.updateProduct(
           adaptyPaywallId: _adaptyPaywallIdController.text,
+          restorableAdaptyVendorProductIdsAsString:
+              _restorableAdaptyVendorProductIdsController.text,
           visibleInMarket: _visibleInMarket,
           id: _productId,
           title: _titleController.text,

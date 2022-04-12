@@ -4,6 +4,7 @@ class ProductModel {
   const ProductModel({
     required this.id,
     required this.adaptyPaywallId,
+    required this.restorableAdaptyVendorProductIds,
     required this.title,
     required this.vendor,
     required this.series,
@@ -43,6 +44,10 @@ class ProductModel {
     return ProductModel(
       id: (data['id'] as String?) ?? '',
       adaptyPaywallId: (data['adapty_paywall_id'] as String?) ?? '',
+      restorableAdaptyVendorProductIds: List<String>.from(
+        data['restorable_adapty_vendor_product_ids'] as List<dynamic>? ??
+            const <String>[],
+      ),
       title: (data['title'] as String?) ?? '',
       vendor: (data['vendor'] as String?) ?? '',
       series: (data['series'] as String?) ?? '',
@@ -88,6 +93,7 @@ class ProductModel {
   final String id;
 
   final String adaptyPaywallId;
+  final List<String> restorableAdaptyVendorProductIds;
 
   // product data
   final String title;

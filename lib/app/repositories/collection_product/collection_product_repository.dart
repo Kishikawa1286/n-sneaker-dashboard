@@ -240,6 +240,9 @@ class CollectionProductRepository {
       data: <String, dynamic>{
         'account_id': accountId,
         'payment_method': enumToString(PaymentMethod.dashboard),
+        // 決済を伴わない場合は空文字列にしておく
+        'vendor_product_id': '',
+        'purchased_at': '',
         'created_at': Timestamp.now(),
         'last_edited_at': Timestamp.now(),
         'product_id': product.id,
