@@ -113,6 +113,7 @@ class ProductRepository {
     required String adaptyPaywallId,
     required String restorableAdaptyVendorProductIdsAsString,
     required bool visibleInMarket,
+    required bool availableInTrial,
     required String title,
     required String vendor,
     required String series,
@@ -151,6 +152,7 @@ class ProductRepository {
         restorableAdaptyVendorProductIdsAsString:
             restorableAdaptyVendorProductIdsAsString,
         visibleInMarket: visibleInMarket,
+        availableInTrial: availableInTrial,
         id: id,
         title: title,
         vendor: vendor,
@@ -185,6 +187,7 @@ class ProductRepository {
     required String adaptyPaywallId,
     required String restorableAdaptyVendorProductIdsAsString,
     required bool visibleInMarket,
+    required bool availableInTrial,
     required String id,
     required String title,
     required String vendor,
@@ -269,6 +272,7 @@ class ProductRepository {
         'transparent_background_images': [transparentBackgroundImageUrl],
         'price_jpy': priceJpy,
         'vivsible_in_market': visibleInMarket,
+        'available_in_trial': availableInTrial,
         'last_edited_at': Timestamp.now(),
       },
     );

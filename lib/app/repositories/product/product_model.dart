@@ -31,6 +31,7 @@ class ProductModel {
     required this.arStatement,
     required this.otherStatement,
     required this.visibleInMarket,
+    required this.availableInTrial,
     this.documentSnapshot,
   });
 
@@ -84,6 +85,7 @@ class ProductModel {
       numberOfHolders: (data['number_of_holders'] as int?) ?? 0,
       numberOfGlbFiles: (data['number_of_glb_files'] as int?) ?? 0,
       visibleInMarket: (data['vivsible_in_market'] as bool?) ?? false,
+      availableInTrial: (data['available_in_trial'] as bool?) ?? false,
       createdAt: (data['created_at'] as Timestamp?) ?? Timestamp.now(),
       lastEditedAt: (data['last_edited_at'] as Timestamp?) ?? Timestamp.now(),
       documentSnapshot: snapshot,
@@ -125,6 +127,7 @@ class ProductModel {
   final int numberOfGlbFiles;
 
   final bool visibleInMarket;
+  final bool availableInTrial;
 
   final Timestamp createdAt;
   final Timestamp lastEditedAt;

@@ -82,11 +82,13 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   ImageProvider? _marketTileImage;
   ImageProvider? _transparentBackgroundImage;
   bool _visibleInMarket = false;
+  bool _availableInTrial = false;
 
   List<ImageProvider> get marketImages => _marketImages;
   ImageProvider? get marketTileImage => _marketTileImage;
   ImageProvider? get transparentBackgroundImage => _transparentBackgroundImage;
   bool get visibleInMarket => _visibleInMarket;
+  bool get availableInTrial => _availableInTrial;
 
   bool _uploading = false;
   bool get uploading => _uploading;
@@ -100,6 +102,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     _restorableAdaptyVendorProductIdsController.text =
         product.restorableAdaptyVendorProductIds.join(',');
     _visibleInMarket = product.visibleInMarket;
+    _availableInTrial = product.availableInTrial;
     _titleController.text = product.title;
     _vendorController.text = product.vendor;
     _seriesController.text = product.series;
@@ -128,6 +131,12 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   // ignore: avoid_positional_boolean_parameters
   void setVisibleInMarket(bool? value) {
     _visibleInMarket = value ?? false;
+    notifyListeners();
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  void setAvailableInTrial(bool? value) {
+    _availableInTrial = value ?? false;
     notifyListeners();
   }
 
@@ -181,6 +190,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
           restorableAdaptyVendorProductIdsAsString:
               _restorableAdaptyVendorProductIdsController.text,
           visibleInMarket: _visibleInMarket,
+          availableInTrial: _availableInTrial,
           title: _titleController.text,
           vendor: _vendorController.text,
           series: _seriesController.text,
@@ -210,6 +220,7 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
           restorableAdaptyVendorProductIdsAsString:
               _restorableAdaptyVendorProductIdsController.text,
           visibleInMarket: _visibleInMarket,
+          availableInTrial: _availableInTrial,
           id: _productId,
           title: _titleController.text,
           vendor: _vendorController.text,

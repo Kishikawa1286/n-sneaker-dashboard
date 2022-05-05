@@ -154,6 +154,15 @@ class ProductEditPage extends HookConsumerWidget {
                     controlAffinity: ListTileControlAffinity.leading,
                     onChanged: viewModel.setVisibleInMarket,
                   ),
+                  CheckboxListTile(
+                    value: viewModel.availableInTrial,
+                    title: const Text(
+                      'availableInTrial',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    onChanged: viewModel.setAvailableInTrial,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
                     child: ElevatedButton(
