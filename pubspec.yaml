@@ -13,7 +13,6 @@ dependencies:
   firebase_auth: ^3.3.9
   firebase_core: ^1.13.0
   firebase_storage: ^10.2.9
-  firebase_storage_web: ^3.2.10
   flutter:
     sdk: flutter
   hooks_riverpod: ^1.0.3
