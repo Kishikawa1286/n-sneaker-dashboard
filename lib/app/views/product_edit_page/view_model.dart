@@ -81,8 +81,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   List<ImageProvider> _marketImages = [];
   ImageProvider? _marketTileImage;
   ImageProvider? _transparentBackgroundImage;
-  bool _visibleInMarket = false;
-  bool _availableInTrial = false;
+  bool _visibleInMarket = true;
+  bool _availableInTrial = true;
 
   List<ImageProvider> get marketImages => _marketImages;
   ImageProvider? get marketTileImage => _marketTileImage;
