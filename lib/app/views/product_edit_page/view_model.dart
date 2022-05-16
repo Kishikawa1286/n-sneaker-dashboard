@@ -35,8 +35,8 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final LocalFileRepository _localFileRepository;
   final CollectionProductRepository _collectionProductRepository;
 
-  final _adaptyPaywallIdController = TextEditingController();
-  final _restorableAdaptyVendorProductIdsController = TextEditingController();
+  final _revenuecatPackageIdController = TextEditingController();
+  final _restorableRevenuecatPackageIdsController = TextEditingController();
   final _titleController = TextEditingController();
   final _vendorController = TextEditingController();
   final _seriesController = TextEditingController();
@@ -54,10 +54,10 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
   final _otherStatementJpController = TextEditingController();
   final _priceJpyController = TextEditingController();
 
-  TextEditingController get adaptyPaywallIdController =>
-      _adaptyPaywallIdController;
-  TextEditingController get restorableAdaptyVendorProductIdsController =>
-      _restorableAdaptyVendorProductIdsController;
+  TextEditingController get revenuecatPackageIdController =>
+      _revenuecatPackageIdController;
+  TextEditingController get restorableRevenuecatPackageIdsController =>
+      _restorableRevenuecatPackageIdsController;
   TextEditingController get titleController => _titleController;
   TextEditingController get vendorController => _vendorController;
   TextEditingController get seriesController => _seriesController;
@@ -98,9 +98,9 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
       return;
     }
     final product = await _productRepository.fetchProductById(_productId);
-    _adaptyPaywallIdController.text = product.adaptyPaywallId;
-    _restorableAdaptyVendorProductIdsController.text =
-        product.restorableAdaptyVendorProductIds.join(',');
+    _revenuecatPackageIdController.text = product.revenuecatPackageId;
+    _restorableRevenuecatPackageIdsController.text =
+        product.restorableRevenuecatPackageIds.join(',');
     _visibleInMarket = product.visibleInMarket;
     _availableInTrial = product.availableInTrial;
     _titleController.text = product.title;
@@ -186,9 +186,9 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
     try {
       if (_productId.isEmpty) {
         await _productRepository.addProduct(
-          adaptyPaywallId: _adaptyPaywallIdController.text,
-          restorableAdaptyVendorProductIdsAsString:
-              _restorableAdaptyVendorProductIdsController.text,
+          revenuecatPackageId: _revenuecatPackageIdController.text,
+          restorableRevenuecatPackageIdsAsString:
+              _restorableRevenuecatPackageIdsController.text,
           visibleInMarket: _visibleInMarket,
           availableInTrial: _availableInTrial,
           title: _titleController.text,
@@ -216,9 +216,9 @@ class ProductEditPageViewModel extends ViewModelChangeNotifier {
         );
       } else {
         await _productRepository.updateProduct(
-          adaptyPaywallId: _adaptyPaywallIdController.text,
-          restorableAdaptyVendorProductIdsAsString:
-              _restorableAdaptyVendorProductIdsController.text,
+          revenuecatPackageId: _revenuecatPackageIdController.text,
+          restorableRevenuecatPackageIdsAsString:
+              _restorableRevenuecatPackageIdsController.text,
           visibleInMarket: _visibleInMarket,
           availableInTrial: _availableInTrial,
           id: _productId,

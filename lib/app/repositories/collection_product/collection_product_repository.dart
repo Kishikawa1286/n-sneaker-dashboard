@@ -239,11 +239,11 @@ class CollectionProductRepository {
       collectionPath: collectionProductsCollectionPath,
       data: <String, dynamic>{
         'account_id': accountId,
-        'vendor_transaction_id': '',
         'payment_method': enumToString(PaymentMethod.dashboard),
         // 決済を伴わない場合は空文字列にしておく
-        'vendor_product_id': '',
-        'purchased_at': '',
+        'revenuecat_transaction_id': '',
+        'revenuecat_product_id': '',
+        'purchase_date': '',
         'created_at': Timestamp.now(),
         'last_edited_at': Timestamp.now(),
         'product_id': product.id,

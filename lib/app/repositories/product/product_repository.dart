@@ -110,8 +110,8 @@ class ProductRepository {
   }
 
   Future<void> addProduct({
-    required String adaptyPaywallId,
-    required String restorableAdaptyVendorProductIdsAsString,
+    required String revenuecatPackageId,
+    required String restorableRevenuecatPackageIdsAsString,
     required bool visibleInMarket,
     required bool availableInTrial,
     required String title,
@@ -148,9 +148,9 @@ class ProductRepository {
     );
     try {
       await updateProduct(
-        adaptyPaywallId: adaptyPaywallId,
-        restorableAdaptyVendorProductIdsAsString:
-            restorableAdaptyVendorProductIdsAsString,
+        revenuecatPackageId: revenuecatPackageId,
+        restorableRevenuecatPackageIdsAsString:
+            restorableRevenuecatPackageIdsAsString,
         visibleInMarket: visibleInMarket,
         availableInTrial: availableInTrial,
         id: id,
@@ -184,8 +184,8 @@ class ProductRepository {
   }
 
   Future<void> updateProduct({
-    required String adaptyPaywallId,
-    required String restorableAdaptyVendorProductIdsAsString,
+    required String revenuecatPackageId,
+    required String restorableRevenuecatPackageIdsAsString,
     required bool visibleInMarket,
     required bool availableInTrial,
     required String id,
@@ -243,14 +243,13 @@ class ProductRepository {
         transparentBackgroundImageUrl == null) {
       throw Exception('failed to upload images.');
     }
-    final restorableAdaptyVendorProductIds =
-        restorableAdaptyVendorProductIdsAsString.split(',');
+    final restorableRevenuecatPackageIds =
+        restorableRevenuecatPackageIdsAsString.split(',');
     await _cloudFirestoreInterface.setData(
       documentPath: documentPath,
       data: <String, dynamic>{
-        'adapty_paywall_id': adaptyPaywallId,
-        'restorable_adapty_vendor_product_ids':
-            restorableAdaptyVendorProductIds,
+        'revenuecat_package_id': revenuecatPackageId,
+        'restorable_revenuecat_package_ids': restorableRevenuecatPackageIds,
         'title': title,
         'vendor': vendor,
         'series': series,
